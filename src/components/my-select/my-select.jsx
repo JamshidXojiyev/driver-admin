@@ -4,7 +4,7 @@ import { OptionStyle, SelectStyle } from "./my-select.s";
 
 function MySelect(props) {
   return (
-    <>
+    <div>
       {props.label && (
         <LabelStyle error={props.error}>{props.label}</LabelStyle>
       )}
@@ -15,7 +15,7 @@ function MySelect(props) {
           </OptionStyle>
         ))}
       </SelectStyle>
-    </>
+    </div>
   );
 }
 

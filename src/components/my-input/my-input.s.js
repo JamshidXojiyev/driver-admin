@@ -120,7 +120,7 @@ export const SearchIconStyle = styled.div`
   right: 5px;
 `;
 export const LabelStyle = styled.label`
-  font-family: Inter;
+  font-family: "Inter", sans-serif;
   font-weight: 600;
   font-size: 12px;
   line-height: 15px;

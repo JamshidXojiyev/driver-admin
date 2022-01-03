@@ -99,6 +99,7 @@ export const Body = styled.div`
   background: #ffffff;
   border-radius: 30px;
   padding: 24px 48px;
+  overflow-y: auto;
 `;
 export const NavigatorStyle = styled.div`
   display: flex;

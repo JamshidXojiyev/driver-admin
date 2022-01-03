@@ -8,7 +8,7 @@ function Clients(props) {
   return (
     <>
       <MyDiv line margin="0 0 18px 0">
-        <MenuName>Drivers list</MenuName>
+        <MenuName>Clients list</MenuName>
         <ActivUser>Active drivers: 10</ActivUser>
         <MyDiv width="230px">
           <MyInput search placeholder="Search" />

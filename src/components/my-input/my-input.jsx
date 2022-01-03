@@ -8,10 +8,11 @@ import {
 } from "./my-input.s";
 import { ReactComponent as SearchIcon } from "../../assats/icons/search.svg";
 import InputMask from "react-input-mask";
+import { MyDiv } from "../../global-styles/my-div.s";
 
 function MyInput(props) {
   return (
-    <>
+    <MyDiv>
       {props.label && (
         <LabelStyle error={props.error}>{props.label}</LabelStyle>
       )}
@@ -34,7 +35,7 @@ function MyInput(props) {
           )}
         </InputBlockStyle>
       )}
-    </>
+    </MyDiv>
   );
 }
 

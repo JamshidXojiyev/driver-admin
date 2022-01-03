@@ -10,6 +10,7 @@ export const MenuName = styled.h1`
   padding-right: 14px;
   margin-right: 14px;
   border-right: 1px solid #e4e6ee;
+  min-width: 127px;
 `;
 
 export const ActivUser = styled.h2`
@@ -20,4 +21,5 @@ export const ActivUser = styled.h2`
   line-height: 18px;
   color: #5b5f7b;
   margin-right: 12px;
+  min-width: 126px;
 `;

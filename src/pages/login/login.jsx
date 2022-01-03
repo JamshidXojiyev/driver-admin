@@ -24,7 +24,7 @@ function LogIn(props) {
             <Brand src={BrandIMG} />
             <H1>Log In to Admin Panel</H1>
             <H2>Enter your phone number and password below</H2>
-            <MyDiv margin="0 0 24px 0">
+            <MyDiv margin="0 0 24px 0" width="100%">
               <MyInput
                 label="PHONE NUMBER"
                 placeholder="Enter your phone number"
