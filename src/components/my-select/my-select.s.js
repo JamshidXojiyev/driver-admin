@@ -24,6 +24,14 @@ export const SelectStyle = styled.select`
       roundBorder
         ? roundBorderStyle
         : recktangleBorder && recktangleBorderStyle}
+    ${({ table }) =>
+      table &&
+      css`
+        height: 27px;
+        min-width: 75px;
+        padding: 0 0 0 16px;
+      `}
+    
     font-family: "Inter", sans-serif;
     font-style: normal;
     font-weight: 600;

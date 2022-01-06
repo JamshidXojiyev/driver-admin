@@ -24,9 +24,12 @@ const lineBottomStyle = css`
 
 const blockStyle = css`
   background: #ffffff;
-  box-shadow: 0px 12px 24px rgba(0, 72, 217, 0.05);
+  /* box-shadow: 0px 12px 24px rgba(0, 72, 217, 0.05); */
+  box-shadow: 0px 2px 4px rgba(0, 72, 217, 0.1),
+    0px 24px 60px rgba(0, 72, 217, 0.05), 0px 12px 24px rgba(0, 72, 217, 0.05);
   border-radius: 12px;
   padding: 16px 18px;
+  overflow: hidden;
 `;
 const bothSidesStyle = css`
   display: flex;
@@ -56,4 +59,5 @@ export const MyDiv = styled.div`
   gap: ${({ gap }) => gap};
   margin: ${({ margin }) => margin};
   padding: ${({ padding }) => padding};
+  position: ${({ relative }) => relative && "relative"};
 `;

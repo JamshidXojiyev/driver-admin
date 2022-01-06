@@ -14,7 +14,7 @@ function Clients(props) {
           <MyInput search placeholder="Search" />
         </MyDiv>
       </MyDiv>
-      <MyTable data={ClientsData} total="50" pageLimit="10" />
+      <MyTable data={ClientsData} total="50" />
     </>
   );
 }

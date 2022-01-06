@@ -23,7 +23,7 @@ function Drivers(props) {
           options={["Search by Name", "test2", "test3"]}
         />
       </MyDiv>
-      <MyTable data={DriversData} />
+      <MyTable data={DriversData} total="5" />
     </>
   );
 }

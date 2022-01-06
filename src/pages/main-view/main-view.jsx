@@ -39,8 +39,8 @@ function MainView(props) {
 
   return (
     <MyDiv line padding="20px 20px 20px 8px">
-      <Sidebar>
-        <User>
+      <Sidebar menu={menuType}>
+        <User menu={menuType}>
           <ImageBorder>
             <UserImage src={UserIMG} />
           </ImageBorder>
@@ -51,15 +51,16 @@ function MainView(props) {
             </MyDiv>
           )}
         </User>
-        <Title>MAIN {menuType && "MENU"} </Title>
+        <Title menu={menuType}>MAIN {menuType && "MENU"} </Title>
         <MenuList>
           {MenuData.map((item, index) => (
             <Link to={item.url}>
               <MenuItem
+                menu={menuType}
                 activ={location.pathname === item.url ? true : false}
                 key={index}
               >
-                <MenuIcon>{item.icon}</MenuIcon>
+                {item.icon}
                 {menuType && <MenuName>{item.name}</MenuName>}
               </MenuItem>
             </Link>

@@ -1,17 +1,26 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 export const Sidebar = styled.div`
-  width: 280px;
+  width: ${({ menu }) => (menu ? "280px" : "90px")};
   height: calc(100vh - 40px);
-  padding-top: 9px;
+  padding-top: ${({ menu }) => (menu ? "9px" : "")};
+  transition: all 0.3s ease-in-out;
 `;
 export const User = styled.div`
+  transition: all 0.3s ease-in-out;
+  ${({ menu }) =>
+    menu
+      ? css`
+          margin-left: 4px;
+        `
+      : css`
+          justify-content: center;
+        `};
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
   align-items: center;
   align-content: center;
-  margin-left: 4px;
 `;
 export const ImageBorder = styled.div`
   border: 2px solid #dfe0eb;
@@ -40,8 +49,16 @@ export const UserPhone = styled.h2`
   opacity: 0.6;
 `;
 export const Title = styled.h1`
+  transition: all 0.3s ease-in-out;
+  ${({ menu }) =>
+    menu
+      ? css`
+          margin-left: 8px;
+        `
+      : css`
+          text-align: center;
+        `};
   margin-top: 27px;
-  margin-left: 8px;
   font-family: "Montserrat", sans-serif;
   font-style: normal;
   font-weight: bold;
@@ -52,6 +69,16 @@ export const Title = styled.h1`
 `;
 export const MenuList = styled.ul``;
 export const MenuItem = styled.li`
+  /* transition: all 0.3s ease-in-out; */
+  transition-duration: 0.2s;
+  ${({ menu }) =>
+    menu
+      ? css`
+          justify-content: flex-start;
+        `
+      : css`
+          justify-content: center;
+        `};
   width: 100%;
   height: 41px;
   background: ${({ activ }) => activ && "#fff!important"};
@@ -60,8 +87,7 @@ export const MenuItem = styled.li`
   flex-direction: row;
   flex-wrap: nowrap;
   align-content: center;
-  align-items: center;
-  justify-content: flex-start;
+  align-items: flex-end;
   padding: 12px 14px;
   margin-bottom: 4px;
   && path {
@@ -82,9 +108,7 @@ export const MenuItem = styled.li`
     }
   }
 `;
-export const MenuIcon = styled.div`
-  width: 36px;
-`;
+
 export const MenuName = styled.h3`
   font-family: "Montserrat", sans-serif;
   font-style: normal;
@@ -92,6 +116,7 @@ export const MenuName = styled.h3`
   font-size: 14px;
   line-height: 17px;
   color: #ffffff;
+  margin-left: 18px;
 `;
 export const Body = styled.div`
   width: 100%;

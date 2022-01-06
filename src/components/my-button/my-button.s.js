@@ -56,15 +56,48 @@ const iconStyle = css`
     }
   }
 `;
+const paginationStyle = css`
+  && {
+    border: 1px solid #eff0f4;
+    border-radius: 3px;
+    color: #505470;
+    background-color: #ffffff00;
+    width: 27px;
+    height: 27px;
+    transform: ${({ left, right }) =>
+      left ? "rotate(90deg)" : right && "rotate(-90deg)"};
+    svg {
+      width: 9px;
+    }
+    path {
+      stroke: ${({ disabled }) =>
+        disabled ? "#C4C4C4 !important" : "#353849 !important"};
+    }
+    ${({ activ }) =>
+      activ &&
+      css`
+        background-color: #5459ea;
+        color: #fff;
+      `}
+  }
+`;
 
 export const ButtonStyled = styled.button`
   width: ${({ width }) => (width ? width : "100%")};
   height: ${({ dark, blue, red }) => (blue || red ? "38px" : dark && "48px")};
-  font-family: Inter;
+  font-family: "Inter", sans-serif;
   font-style: normal;
   font-size: 13px;
   line-height: 16px;
   cursor: pointer;
-  ${({ dark, blue, red, icon }) =>
-    dark ? darkStyle : blue ? blueStyle : red ? redStyle : icon && iconStyle}
+  ${({ dark, blue, red, icon, pagination }) =>
+    dark
+      ? darkStyle
+      : blue
+      ? blueStyle
+      : red
+      ? redStyle
+      : icon
+      ? iconStyle
+      : pagination && paginationStyle}
 `;
