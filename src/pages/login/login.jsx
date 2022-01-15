@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   LogInContainer,
   LeftContent,
@@ -7,47 +7,76 @@ import {
   H1,
   H2,
   LogInBg,
-  LinkStyle,
 } from "./login.s";
 import BrandIMG from "../../assats/images/brand.png";
 import { MyDiv } from "../../global-styles/my-div.s";
 import MyInput from "../../components/my-input/my-input";
 import MyButton from "../../components/my-button/my-button";
+import axios from "axios";
+import { useAlert } from "react-alert";
+import { useHistory } from "react-router-dom";
 
 function LogIn(props) {
+  const alert = useAlert();
+  const history = useHistory();
+  const [user_name, set_user_name] = useState();
+  const [password, set_password] = useState();
+  const [err, setErr] = useState(false);
+  const authenticate = (e) => {
+    e.preventDefault();
+    if (!Number.isNaN(Number(user_name[0]))) {
+      setErr(true);
+      alert.error("Username entered incorrectly !");
+    } else if (!password) {
+      setErr(true);
+      alert.error("Password entered incorrectly !");
+    } else {
+      setErr(false);
+      axios
+        .post(`${process.env.REACT_APP_BASE_URL}/moderator/login`, {
+          username: user_name,
+          password: password,
+        })
+        .then((res) => {
+          history.push("/");
+          alert.success("Password confirmed");
+          localStorage.setItem("token", JSON.stringify(res.data.data.token));
+        })
+        .catch((err) => {
+          setErr(true);
+          alert.error("Incorrect password entered !");
+        });
+    }
+  };
   return (
     <LogInBg>
       <LogInContainer>
         <LeftContent />
-        <RightContent>
+        <RightContent onSubmit={authenticate}>
           <MyDiv center>
             <Brand src={BrandIMG} />
             <H1>Log In to Admin Panel</H1>
             <H2>Enter your phone number and password below</H2>
             <MyDiv margin="0 0 24px 0" width="100%">
               <MyInput
-                label="PHONE NUMBER"
+                error={err}
+                label="User name"
                 placeholder="Enter your phone number"
                 dark
-                filter
-                mask="+\9\98 (99) 999-99-99"
-                // changeVal={(e) => console.log(e)}
+                changeVal={(e) => set_user_name(e)}
               />
             </MyDiv>
-
             <MyDiv margin="0 0 24px 0">
               <MyInput
-                label="PASSWORD"
+                password
+                error={err}
+                label="Password"
                 placeholder="Enter your password"
                 dark
-                filter
-                mask="9 9 9 9"
-                // changeVal={(e) => console.log(e)}
+                changeVal={(e) => set_password(e)}
               />
             </MyDiv>
-            <LinkStyle to="/">
-              <MyButton text="Log In" dark />
-            </LinkStyle>
+            <MyButton text="Log In" dark type="submit" />
           </MyDiv>
         </RightContent>
       </LogInContainer>

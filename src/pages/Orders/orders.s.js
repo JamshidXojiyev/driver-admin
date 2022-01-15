@@ -1,9 +1,28 @@
 import styled, { css } from "styled-components";
 import { MapContainer } from "react-leaflet";
 
+export const StepBlock = styled.div`
+  position: fixed;
+  top: 50%;
+  right: 28px;
+  transform: translateY(-126px);
+`;
+export const StepStyle = styled.div`
+  width: 6px;
+  height: 80px;
+  border-radius: 4px;
+  background-color: ${({ activ }) =>
+    activ ? "#101010" : "rgba(16, 16, 16, 0.3)"};
+  margin-bottom: 6px;
+  :last-child {
+    margin-bottom: 0;
+  }
+`;
+
 export const MyMapContainer = styled(MapContainer)`
   width: 100%;
-  height: calc(100vh - 470px);
+  /* height: calc(100vh - 470px); */
+  height: 300px;
 `;
 export const Block = styled.div`
   background: ${({ bg }) => bg && "#f7f8fa"};
@@ -54,4 +73,7 @@ export const Disabled = styled.div`
       z-index: 9999;
       cursor: no-drop;
     `}
+`;
+export const LeftStyle = styled.div`
+  display: flex;
 `;

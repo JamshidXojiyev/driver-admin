@@ -7,7 +7,6 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  transition: all 0.3s ease-in-out;
 }
 body {
   background-color: #101010;
@@ -26,4 +25,19 @@ link {
 .polymoly {
   fill: url();
   background-image: url("https://banner2.cleanpng.com/20180614/yce/kisspng-city-map-balvanera-city-map-nez-buenos-aires-5b22d1b9bba360.8788754715290085697686.jpg") !important;
+}
+
+/* scroll */
+/* width */
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+  cursor: pointer;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  border-radius: 16px;
+  background: #101010;
+  cursor: pointer;
 }

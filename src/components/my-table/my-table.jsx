@@ -45,6 +45,7 @@ function MyTable(props) {
         <MyDiv line gap="12px" width="auto">
           <H3>Count items: </H3>
           <MySelect
+            width="80px"
             table
             roundBorder
             value={countItems}
@@ -59,6 +60,7 @@ function MyTable(props) {
             onClick={() => page !== "1" && setPage(page - 1)}
           />
           <MySelect
+            width="80px"
             table
             roundBorder
             value={page}

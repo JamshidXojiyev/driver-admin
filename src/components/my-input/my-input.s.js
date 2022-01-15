@@ -102,7 +102,7 @@ export const InputBlockStyle = styled.div`
 `;
 export const InputStyle = styled.input`
   && {
-    width: ${({ width }) => (width ? width : "100%")};
+    width: 100%;
     box-sizing: border-box;
     font-family: "Inter", sans-serif;
     font-size: 14px;

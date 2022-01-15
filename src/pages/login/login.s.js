@@ -22,7 +22,7 @@ export const LeftContent = styled.div`
   width: 400px;
   height: 581px;
 `;
-export const RightContent = styled.div`
+export const RightContent = styled.form`
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;

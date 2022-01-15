@@ -1,5 +1,10 @@
 import styled, { css } from "styled-components";
 
+const baseStyle = css`
+  background: #ffffff00;
+  border: 0;
+  padding: 4px 8px;
+`;
 const darkStyle = css`
   background: #101010;
   border-radius: 8px;
@@ -48,14 +53,15 @@ const iconStyle = css`
     align-items: center;
     background-color: #00000000;
     transition: all 0.3s ease-in-out;
-    /* :hover {
+    :hover {
       background-color: rgba(0, 72, 217, 0.02);
-    } */
+    }
     svg {
       position: inherit !important;
     }
   }
 `;
+
 const paginationStyle = css`
   && {
     border: 1px solid #eff0f4;
@@ -90,8 +96,10 @@ export const ButtonStyled = styled.button`
   font-size: 13px;
   line-height: 16px;
   cursor: pointer;
-  ${({ dark, blue, red, icon, pagination }) =>
-    dark
+  ${({ base, dark, blue, red, icon, pagination }) =>
+    base
+      ? baseStyle
+      : dark
       ? darkStyle
       : blue
       ? blueStyle

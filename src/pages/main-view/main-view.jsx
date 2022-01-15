@@ -7,6 +7,7 @@ import {
   ImageBorder,
   MenuIcon,
   MenuItem,
+  MenuItemAddon,
   MenuList,
   MenuName,
   NavBtnStyle,
@@ -18,6 +19,7 @@ import {
   UserImage,
   UserName,
   UserPhone,
+  BodyContent,
 } from "./main-view.s";
 import UserIMG from "../../assats/images/User.png";
 import { MenuData } from "./menu-data";
@@ -30,15 +32,16 @@ import { ReactComponent as NewsSVG } from "../../assats/icons/news.svg";
 import { ReactComponent as ModeSVG } from "../../assats/icons/mode.svg";
 import MyButton from "../../components/my-button/my-button";
 import Clients from "../Clients/clients";
-import Drivers from "../Drivers/drivers";
 import Orders from "../Orders/orders";
+import Rides from "../Rides/rides";
+import Moderators from "../Moderators/moderators";
+import CarClasses from "../Car-Classes/car-classes";
 
 function MainView(props) {
   const location = useLocation();
   const [menuType, setMenuType] = useState(true);
-
   return (
-    <MyDiv line padding="20px 20px 20px 8px">
+    <MyDiv height="100%" line padding="20px 20px 20px 8px">
       <Sidebar menu={menuType}>
         <User menu={menuType}>
           <ImageBorder>
@@ -60,8 +63,15 @@ function MainView(props) {
                 activ={location.pathname === item.url ? true : false}
                 key={index}
               >
+                {location.pathname === item.url && (
+                  <MenuItemAddon className="top" />
+                )}
                 {item.icon}
                 {menuType && <MenuName>{item.name}</MenuName>}
+
+                {location.pathname === item.url && (
+                  <MenuItemAddon className="bottom" />
+                )}
               </MenuItem>
             </Link>
           ))}
@@ -72,7 +82,8 @@ function MainView(props) {
         <NavigatorStyle>
           <MyDiv line>
             <MyButton
-              text={<MenuIconSVG onClick={() => setMenuType(!menuType)} />}
+              onClick={() => setMenuType(!menuType)}
+              text={<MenuIconSVG />}
               icon
             />
             <H1>Good morning, Maharram</H1>
@@ -87,13 +98,17 @@ function MainView(props) {
             <UserImage src={UserIMG} />
           </NavBtnStyle>
         </NavigatorStyle>
-        <Switch>
-          <Route exact path="/" render={() => <Redirect to="/dashboard" />} />
-          <Route exact path="/dashboard" component={Dashboard} />
-          <Route exact path="/orders" component={Orders} />
-          <Route exact path="/clients" component={Clients} />
-          <Route exact path="/drivers" component={Drivers} />
-        </Switch>
+        <BodyContent>
+          <Switch>
+            <Route exact path="/" render={() => <Redirect to="/dashboard" />} />
+            <Route exact path="/dashboard" component={Dashboard} />
+            <Route exact path="/orders" component={Orders} />
+            <Route exact path="/rides" component={Rides} />
+            <Route exact path="/clients" component={Clients} />
+            <Route exact path="/car-classes" component={CarClasses} />
+            <Route exact path="/moderators" component={Moderators} />
+          </Switch>
+        </BodyContent>
       </Body>
     </MyDiv>
   );

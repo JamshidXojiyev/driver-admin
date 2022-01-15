@@ -69,8 +69,6 @@ export const Title = styled.h1`
 `;
 export const MenuList = styled.ul``;
 export const MenuItem = styled.li`
-  /* transition: all 0.3s ease-in-out; */
-  transition-duration: 0.2s;
   ${({ menu }) =>
     menu
       ? css`
@@ -81,7 +79,12 @@ export const MenuItem = styled.li`
         `};
   width: 100%;
   height: 41px;
-  background: ${({ activ }) => activ && "#fff!important"};
+  ${({ activ }) =>
+    activ &&
+    css`
+      background: #fff !important;
+      position: relative;
+    `};
   border-radius: 30px 0px 0px 30px;
   display: flex;
   flex-direction: row;
@@ -91,17 +94,15 @@ export const MenuItem = styled.li`
   padding: 12px 14px;
   margin-bottom: 4px;
   && path {
-    stroke: ${({ activ }) => activ && "#5459ea!important"};
+    fill: ${({ activ }) => activ && "#5459ea!important"};
   }
   && h3 {
     color: ${({ activ }) => activ && "#5459ea!important"};
   }
-  transition: all 0.5s ease-in-out;
   :hover {
-    background-color: #fff;
     cursor: pointer;
     && path {
-      stroke: #5459ea !important;
+      fill: #5459ea !important;
     }
     && h3 {
       color: #5459ea !important;
@@ -122,10 +123,31 @@ export const Body = styled.div`
   width: 100%;
   height: calc(100vh - 40px);
   background: #ffffff;
-  border-radius: 30px;
-  padding: 24px 48px;
-  overflow-y: auto;
+  border-radius: 20px;
+  padding: 18px 24px;
 `;
+export const BodyContent = styled.div`
+  padding: 8px 12px;
+  width: 100%;
+  height: calc(100% - 60px);
+  overflow-y: auto;
+
+  /* width */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+    cursor: pointer;
+    position: fixed;
+    right: 0;
+  }
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    border-radius: 16px;
+    background: #000;
+    cursor: pointer;
+  }
+`;
+
 export const NavigatorStyle = styled.div`
   display: flex;
   flex-direction: row;
@@ -133,8 +155,8 @@ export const NavigatorStyle = styled.div`
   align-content: center;
   align-items: center;
   justify-content: space-between;
-  padding-bottom: 22px;
-  margin-bottom: 21px;
+  padding-bottom: 10px;
+  margin-bottom: 12px;
   border-bottom: 1px solid #f7f9fc;
 `;
 export const H1 = styled.h1`
@@ -164,6 +186,43 @@ export const NavBtnStyle = styled.div`
     display: contents;
     button {
       margin-right: 20px !important;
+    }
+  }
+`;
+
+export const MenuItemAddon = styled.span`
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 10px;
+  display: block;
+  background: #fff;
+
+  &::after {
+    position: absolute;
+    content: "";
+    left: 0;
+    right: 0;
+    height: 10px;
+    display: block;
+    background: #101010;
+    z-index: 1;
+  }
+
+  &.top {
+    bottom: 100%;
+
+    &::after {
+      bottom: 0;
+      border-radius: 0 0 100px 0;
+    }
+  }
+  &.bottom {
+    top: 100%;
+
+    &::after {
+      top: 0;
+      border-radius: 0 100px 0 0;
     }
   }
 `;

@@ -60,4 +60,5 @@ export const MyDiv = styled.div`
   margin: ${({ margin }) => margin};
   padding: ${({ padding }) => padding};
   position: ${({ relative }) => relative && "relative"};
+  background-color: ${({ bg }) => bg && bg};
 `;

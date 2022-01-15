@@ -1,10 +1,18 @@
 import MyCheckbox from "../../components/my-checkbox/my-checkbox";
+import MyButton from "../../components/my-button/my-button";
 import MyInput from "../../components/my-input/my-input";
 import MySelect from "../../components/my-select/my-select";
 import MyTextarea from "../../components/my-textarea/my-textarea";
 import { MyDiv } from "../../global-styles/my-div.s";
 import { GoogleLayer } from "react-leaflet-google-v2";
-import { MyMapContainer, Block, SumBlock, Disabled } from "./orders.s";
+import {
+  MyMapContainer,
+  Block,
+  SumBlock,
+  Disabled,
+  StepStyle,
+  StepBlock,
+} from "./orders.s";
 import { LayersControl, Marker, TileLayer } from "react-leaflet";
 import { FullscreenControl } from "react-leaflet-fullscreen";
 import MyRadio from "../../components/my-radio/my-radio";
@@ -28,9 +36,14 @@ function Orders(props) {
 
   return (
     <>
-      <MyDiv relative width="100%" margin="0 0 20px 0">
+      <StepBlock>
+        <StepStyle activ={step === 1} />
+        <StepStyle activ={step === 2} />
+        <StepStyle activ={step === 3} />
+      </StepBlock>
+      <MyDiv relative width="100%" margin="0 0 12px 0">
         <MyMapContainer
-          center={[41.29965244731724, 69.24603818681436]}
+          center={[40.75957598470287, -73.99591649877739]}
           zoom={12}
         >
           <LayersControl>
@@ -59,37 +72,36 @@ function Orders(props) {
         </MyMapContainer>
         <Disabled disabled={step !== 1} />
       </MyDiv>
-
-      <MyDiv bothSides gap="28px">
-        <MyDiv relative block>
+      <MyDiv bothSides>
+        <MyDiv block margin="0 12px 0 0" relative>
           <Disabled disabled={step !== 2} />
-          <MyDiv bothSides gap="20px" margin="0 0 18px 0">
-            <MyDiv width="48%">
-              <MyInput
-                label="Phone number:"
-                placeholder="Enter your phone number"
-                lite
-                filter
-                mask="+\9\98 (99) 999-99-99"
-                changeVal={(e) => console.log(e)}
-              />
-            </MyDiv>
-            <MyDiv width="48%">
-              <MySelect
-                roundBorder
-                label="Payment:"
-                options={["Cash", "test2", "test3"]}
-                onChange={(e) => console.log(e.target.value)}
-              />
-            </MyDiv>
+          <MyDiv bothSides gap="12px" margin="0 0 12px 0">
+            <MyInput
+              width="48%"
+              label="Phone number:"
+              placeholder="Enter your phone number"
+              lite
+              filter
+              mask="+\9\98 (99) 999-99-99"
+              changeVal={(e) => console.log(e)}
+            />
+            <MySelect
+              width="48%"
+              roundBorder
+              label="Payment:"
+              options={["Cash", "test2", "test3"]}
+              onChange={(e) => console.log(e.target.value)}
+            />
           </MyDiv>
-          <MyDiv margin="0 0 18px 0">
-            <MyCheckbox label="I agree to the terms and conditions" />
-          </MyDiv>
+          <MyCheckbox label="I agree to the terms and conditions" />
+          <MyDiv margin="0 0 12px 0" />
           <MyTextarea label="Comment:" />
+          <MyDiv bothSides gap="12px" margin="12px 0 0 0">
+            <MyButton red text="Back" />
+            <MyButton blue text="Next" />
+          </MyDiv>
         </MyDiv>
-
-        <MyDiv relative block height="277px" padding="0">
+        <MyDiv relative block padding="0">
           <Disabled disabled={step !== 3} />
           <Block bg>
             <MyDiv center>Class</MyDiv>
@@ -105,6 +117,15 @@ function Orders(props) {
               </MyDiv>
             </Block>
           ))}
+          <MyDiv
+            bothSides
+            gap="12px"
+            margin="12px 0 0 0"
+            padding="0 12px 12px 12px"
+          >
+            <MyButton red text="Back" />
+            <MyButton blue text="Finish" />
+          </MyDiv>
         </MyDiv>
       </MyDiv>
     </>

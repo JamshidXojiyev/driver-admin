@@ -17,7 +17,7 @@ const recktangleBorderStyle = css`
 export const SelectStyle = styled.select`
   && {
     padding: 0 20px;
-    width: ${({ width }) => (width ? width : "100%")};
+    width: 100%;
     appearance: none;
     background: url(${BottomImg}) white no-repeat calc(100% - 16px) !important;
     ${({ roundBorder, recktangleBorder }) =>

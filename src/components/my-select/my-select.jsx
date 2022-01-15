@@ -1,10 +1,11 @@
 import React from "react";
+import { MyDiv } from "../../global-styles/my-div.s";
 import { LabelStyle } from "../my-input/my-input.s";
 import { OptionStyle, SelectStyle } from "./my-select.s";
 
 function MySelect(props) {
   return (
-    <div>
+    <MyDiv width={props.width}>
       {props.label && (
         <LabelStyle error={props.error}>{props.label}</LabelStyle>
       )}
@@ -15,7 +16,7 @@ function MySelect(props) {
           </OptionStyle>
         ))}
       </SelectStyle>
-    </div>
+    </MyDiv>
   );
 }
 
