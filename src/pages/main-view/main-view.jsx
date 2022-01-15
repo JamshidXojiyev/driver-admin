@@ -5,7 +5,6 @@ import {
   H1,
   H2,
   ImageBorder,
-  MenuIcon,
   MenuItem,
   MenuItemAddon,
   MenuList,
@@ -23,7 +22,7 @@ import {
 } from "./main-view.s";
 import UserIMG from "../../assats/images/User.png";
 import { MenuData } from "./menu-data";
-import { Link, Redirect, Route, Switch } from "react-router-dom";
+import { Link, Redirect, Route, Switch, useHistory } from "react-router-dom";
 import Dashboard from "../Dashboard/dashboard";
 import { useLocation } from "react-router-dom";
 import { ReactComponent as MenuIconSVG } from "../../assats/icons/menu.svg";
@@ -40,6 +39,8 @@ import CarClasses from "../Car-Classes/car-classes";
 function MainView(props) {
   const location = useLocation();
   const [menuType, setMenuType] = useState(true);
+  const user = localStorage.getItem("token");
+
   return (
     <MyDiv height="100%" line padding="20px 20px 20px 8px">
       <Sidebar menu={menuType}>
@@ -100,7 +101,11 @@ function MainView(props) {
         </NavigatorStyle>
         <BodyContent>
           <Switch>
-            <Route exact path="/" render={() => <Redirect to="/dashboard" />} />
+            <Route
+              exact
+              path="/"
+              render={() => <Redirect to={user ? "/dashboard" : "/login"} />}
+            />
             <Route exact path="/dashboard" component={Dashboard} />
             <Route exact path="/orders" component={Orders} />
             <Route exact path="/rides" component={Rides} />

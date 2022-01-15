@@ -17,8 +17,8 @@ import { useAlert } from "react-alert";
 import { useHistory } from "react-router-dom";
 
 function LogIn(props) {
-  const alert = useAlert();
   const history = useHistory();
+  const alert = useAlert();
   const [user_name, set_user_name] = useState();
   const [password, set_password] = useState();
   const [err, setErr] = useState(false);
@@ -38,7 +38,7 @@ function LogIn(props) {
           password: password,
         })
         .then((res) => {
-          history.push("/");
+          history.push("/dashbord");
           alert.success("Password confirmed");
           localStorage.setItem("token", JSON.stringify(res.data.data.token));
         })

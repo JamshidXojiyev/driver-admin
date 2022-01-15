@@ -22,11 +22,6 @@ function App() {
     timeout: 4000,
     offset: "4px",
   };
-  const history = useHistory();
-  const user = localStorage.getItem("token");
-  if (!user) {
-    history.push("/login");
-  }
   return (
     <AlertProvider template={AlertTemplate} {...options}>
       <Switch>

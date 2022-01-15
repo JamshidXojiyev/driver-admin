@@ -5,6 +5,7 @@ export const UserImage = styled.img`
   height: ${({ height }) => (height ? height : "38px")};
   border-radius: 50% !important;
   margin: 0 5px 0 5px;
+  object-fit: scale-down;
   ${({ chat }) =>
     chat &&
     css`
