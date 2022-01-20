@@ -1,18 +1,26 @@
 import React, { useEffect, useState } from "react";
 import MyDialog from "../../components/dialog/dialog";
 import MyButton from "../../components/my-button/my-button";
-import MyInput from "../../components/my-input/my-input";
 import MyTable from "../../components/my-table/my-table";
-import { ActivUser, MenuName } from "../../global-styles/body-title";
+import { MenuName } from "../../global-styles/body-title";
 import { MyDiv } from "../../global-styles/my-div.s";
-import { UserImage, UserName } from "../../global-styles/user.s";
+import { UserImage } from "../../global-styles/user.s";
 import { ReactComponent as EditSVG } from "../../assats/icons/edit.svg";
 import { ReactComponent as DeleteSVG } from "../../assats/icons/delete.svg";
 import { ReactComponent as ViewIcon } from "../../assats/icons/view.svg";
 import axios from "axios";
+import CreateCarClass from "./create-car-class";
+import { useAlert } from "react-alert";
+import { useHistory } from "react-router";
 
 function CarClasses(props) {
+  const alert = useAlert();
+  const history = useHistory();
+  const token = localStorage.getItem("token");
   const [dataBase, setDataBase] = useState([]);
+  const [total, setTotal] = useState(1);
+  const [pageLimit, setPageLimit] = useState(10);
+  const [page, setPage] = useState(1);
   const [newData, setNewData] = useState({
     header: [
       "Image",
@@ -39,13 +47,34 @@ function CarClasses(props) {
     ],
   });
   const [dialog, setDialog] = useState(false);
-  const [dialogData, setDialogData] = useState([]);
-  useEffect(() => {
-    const token = localStorage.getItem("token");
+  const [dialogData, setDialogData] = useState();
+  const [userId, setUserId] = useState();
+  const [renderTable, setRenderTable] = useState(1);
+
+  // car class delete
+  const Car_Class_Delete = (e) => {
     axios
       .post(
-        "http://135.181.101.63:8080/car-class/get",
-        { limit: 20, page: 1 },
+        `${process.env.REACT_APP_BASE_URL}/car-class/delete`,
+        { indexes: e },
+        {
+          headers: {
+            Authorization: `Bearer ${token.substring(1, token.length - 1)}`,
+          },
+        }
+      )
+      .then((res) => {
+        alert.success("Car class deleted.");
+        setRenderTable(renderTable + 1);
+      })
+      .catch((err) => alert("Car class not deleted."));
+  };
+
+  useEffect(() => {
+    axios
+      .post(
+        `${process.env.REACT_APP_BASE_URL}/car-class/get`,
+        { limit: parseInt(pageLimit), page: parseInt(page) },
         {
           headers: {
             Authorization: `Bearer ${token.substring(1, token.length - 1)}`,
@@ -54,9 +83,15 @@ function CarClasses(props) {
       )
       .then((res) => {
         setDataBase(res.data.data.data);
-        console.log(res.data.data.data);
+        setTotal(res.data.data.total);
+      })
+      .catch((err) => {
+        if (err.response.data.code == 401) {
+          localStorage.removeItem("token");
+          history.push("/login");
+        }
       });
-  }, []);
+  }, [pageLimit, page, dialog, renderTable]);
 
   useEffect(() => {
     const data = dataBase.map((item) => {
@@ -80,11 +115,18 @@ function CarClasses(props) {
               onClick={() => {
                 setDialog(true);
                 setDialogData(item);
+                setUserId(item._id);
               }}
               icon
               text={<EditSVG />}
             />
-            <MyButton icon text={<DeleteSVG />} />
+            <MyButton
+              onClick={() => {
+                Car_Class_Delete(item._id);
+              }}
+              icon
+              text={<DeleteSVG />}
+            />
           </MyDiv>
         ),
       };
@@ -96,21 +138,38 @@ function CarClasses(props) {
   return (
     <>
       <MyDiv bothSides margin="0 0 18px 0">
-        <MyDiv line>
-          <MenuName>Car Classes list</MenuName>
-          <ActivUser>Active drivers: 10</ActivUser>
-          <MyDiv width="230px">
-            <MyInput search placeholder="Search" />
-          </MyDiv>
-        </MyDiv>
-        <MyButton width="200px" blue text={"+ Create Car-Classes"} />
+        <MenuName borderNone>Car Classes list</MenuName>
+        <MyButton
+          width="200px"
+          blue
+          text={"+ Create Car-Classes"}
+          onClick={() => {
+            setDialog(true);
+            setDialogData();
+          }}
+        />
       </MyDiv>
-      <MyTable data={newData} total="2" pageLimit="10" />
+      <MyTable
+        data={newData}
+        total={total}
+        set_page_limit={(e) => setPageLimit(e)}
+        set_page={(e) => setPage(e)}
+      />
       {dialog && (
         <MyDialog
           title="Clients Information"
-          body={<h1>asdasda </h1>}
-          close={(e) => setDialog(e)}
+          body={
+            <CreateCarClass
+              user_id={userId}
+              dialog_data={dialogData}
+              close={(e) => {
+                setDialog(e);
+              }}
+            />
+          }
+          close={(e) => {
+            setDialog(e);
+          }}
         />
       )}
     </>

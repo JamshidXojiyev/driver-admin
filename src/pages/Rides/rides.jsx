@@ -19,7 +19,7 @@ function Rides(props) {
       </MyDiv>
       <MyTabs todoItem={(e) => setTab(e)} list={tabs} />
       <MyDiv margin="24px 0 0 0">
-        {tab === "Completed" ? <Completed /> : <h1>404</h1>}
+        {tab === "Completed" ? <h1>Completed</h1> : <h1>404</h1>}
       </MyDiv>
     </>
   );

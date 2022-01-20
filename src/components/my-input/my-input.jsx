@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import MyButton from "../my-button/my-button";
 import {
+  ErrorMessage,
   InputBlockStyle,
   InputStyle,
   LabelStyle,
@@ -18,20 +19,14 @@ function MyInput(props) {
         <LabelStyle error={props.error}>{props.label}</LabelStyle>
       )}
       {props.filter ? (
-        <InputMask
-          mask={props.mask}
-          maskChar="_"
-          value={props.val}
-          onChange={(e) => props.changeVal(e.target.value)}
-        >
-          {(propsPhone) => <InputStyle {...props}>{props.text}</InputStyle>}
+        <InputMask mask={props.mask} maskChar="_" {...props}>
+          {(propsPhone) => <InputStyle>{props.text}</InputStyle>}
         </InputMask>
       ) : (
         <InputBlockStyle>
           <InputStyle
             type={open && props.password ? "password" : "text"}
             {...props}
-            onChange={(e) => props.changeVal(e.target.value)}
           >
             {props.text}
           </InputStyle>
@@ -52,6 +47,7 @@ function MyInput(props) {
           )}
         </InputBlockStyle>
       )}
+      <ErrorMessage>{props.errorMessage}</ErrorMessage>
     </MyDiv>
   );
 }

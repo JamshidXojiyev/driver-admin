@@ -9,7 +9,7 @@ export const MenuName = styled.h1`
   color: #2e3a59;
   padding-right: 14px;
   margin-right: 14px;
-  border-right: 1px solid #e4e6ee;
+  border-right: ${({ borderNone }) => (borderNone ? "" : "1px solid #e4e6ee")};
   min-width: 127px;
 `;
 

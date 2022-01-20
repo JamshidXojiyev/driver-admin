@@ -15,65 +15,91 @@ import MyButton from "../../components/my-button/my-button";
 import axios from "axios";
 import { useAlert } from "react-alert";
 import { useHistory } from "react-router-dom";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 
 function LogIn(props) {
   const history = useHistory();
   const alert = useAlert();
-  const [user_name, set_user_name] = useState();
-  const [password, set_password] = useState();
-  const [err, setErr] = useState(false);
-  const authenticate = (e) => {
-    e.preventDefault();
-    if (!Number.isNaN(Number(user_name[0]))) {
-      setErr(true);
-      alert.error("Username entered incorrectly !");
-    } else if (!password) {
-      setErr(true);
-      alert.error("Password entered incorrectly !");
-    } else {
-      setErr(false);
+
+  const formik = useFormik({
+    initialValues: {
+      username: "",
+      password: "",
+    },
+    validationSchema: Yup.object({
+      username: Yup.string()
+        .test(
+          "Start from letter",
+          "This field should start from letter",
+          (value) => Number.isNaN(Number(value[0]))
+        )
+        .max(30, "Maximum length 30 characters")
+        .min(5, "Minimum length is 5 characters")
+        .required("Required"),
+      password: Yup.string()
+        .max(30, "Maximum length 30 characters")
+        .min(5, "Minimum length is 5 characters")
+        .required("Required"),
+    }),
+    onSubmit: (values) => {
+      console.log(values);
+
       axios
-        .post(`${process.env.REACT_APP_BASE_URL}/moderator/login`, {
-          username: user_name,
-          password: password,
-        })
+        .post(`${process.env.REACT_APP_BASE_URL}/moderator/login`, values)
         .then((res) => {
           history.push("/dashbord");
           alert.success("Password confirmed");
           localStorage.setItem("token", JSON.stringify(res.data.data.token));
         })
         .catch((err) => {
-          setErr(true);
           alert.error("Incorrect password entered !");
         });
-    }
-  };
+    },
+  });
+
   return (
     <LogInBg>
       <LogInContainer>
         <LeftContent />
-        <RightContent onSubmit={authenticate}>
+        <RightContent onSubmit={formik.handleSubmit}>
           <MyDiv center>
             <Brand src={BrandIMG} />
             <H1>Log In to Admin Panel</H1>
             <H2>Enter your phone number and password below</H2>
             <MyDiv margin="0 0 24px 0" width="100%">
               <MyInput
-                error={err}
                 label="User name"
                 placeholder="Enter your phone number"
                 dark
-                changeVal={(e) => set_user_name(e)}
+                name="username"
+                value={formik.values.username}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                error={
+                  formik.touched.username && formik.errors.username
+                    ? true
+                    : false
+                }
+                errorMessage={formik.touched.username && formik.errors.username}
               />
             </MyDiv>
             <MyDiv margin="0 0 24px 0">
               <MyInput
                 password
-                error={err}
                 label="Password"
                 placeholder="Enter your password"
                 dark
-                changeVal={(e) => set_password(e)}
+                name="password"
+                value={formik.values.password}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                error={
+                  formik.touched.password && formik.errors.password
+                    ? true
+                    : false
+                }
+                errorMessage={formik.touched.password && formik.errors.password}
               />
             </MyDiv>
             <MyButton text="Log In" dark type="submit" />

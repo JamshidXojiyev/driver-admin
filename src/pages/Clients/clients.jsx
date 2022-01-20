@@ -1,76 +1,114 @@
-import React, { useState, useEffect } from "react";
-import MyTable from "../../components/my-table/my-table";
-import { ActivUser, MenuName } from "../../global-styles/body-title";
+import React, { useEffect, useState } from "react";
+import MyDialog from "../../components/dialog/dialog";
+import MyButton from "../../components/my-button/my-button";
+import { MenuName } from "../../global-styles/body-title";
 import { MyDiv } from "../../global-styles/my-div.s";
-import MyInput from "../../components/my-input/my-input";
-import { UserImage } from "../../global-styles/user.s";
-import { UserName, UserPhone } from "../../global-styles/user.s";
 import { ReactComponent as EditSVG } from "../../assats/icons/edit.svg";
 import { ReactComponent as DeleteSVG } from "../../assats/icons/delete.svg";
-import MyButton from "../../components/my-button/my-button";
-import MyDialog from "../../components/dialog/dialog";
-import ClientDialog from "./dialog";
+import { ReactComponent as MessageIcon } from "../../assats/icons/message.svg";
+import axios from "axios";
+import { useAlert } from "react-alert";
+import CreateClient from "./create-client";
+import ClientsMessage from "./clients-message";
+import MyInput from "../../components/my-input/my-input";
+import { useHistory } from "react-router";
+import MyTable from "../../components/my-table/my-table";
 
 function Clients(props) {
-  const dataBase = [
-    {
-      user_name: "Rachel Carlson",
-      phone: "(721)-723-1807",
-      img: "https://randomuser.me/api/portraits/women/50.jpg",
-      total_rides: "132",
-      total_finished: "6",
-      home_location: "пл. Беш Агач, Furkat Street, Tashkent, Oʻzbekiston",
-      work_location: "13 Kumarik ko'chasi, Tashkent 100167, Oʻzbekiston",
-    },
-    {
-      user_name: "Allen Stephens",
-      phone: "(721)-723-1807",
-      img: "https://randomuser.me/api/portraits/men/40.jpg",
-      total_rides: "132",
-      total_finished: "6",
-      home_location: "пл. Беш Агач, Furkat Street, Tashkent, Oʻzbekiston",
-      work_location: "13 Kumarik ko'chasi, Tashkent 100167, Oʻzbekiston",
-    },
-  ];
+  const alert = useAlert();
+  const history = useHistory();
+  const token = localStorage.getItem("token");
+  const [dataBase, setDataBase] = useState([]);
+  const [total, setTotal] = useState(1);
+  const [pageLimit, setPageLimit] = useState(10);
+  const [page, setPage] = useState(1);
   const [newData, setNewData] = useState({
     header: [
-      "User",
-      "Total Rides",
+      "",
+      "First Name",
+      "Last Name",
+      "Phone Number",
       "Total Finished",
-      "Home Location",
-      "Work Location",
+      "Total Rides",
       "",
     ],
     body: [],
     order: [
-      "user",
-      "total_rides",
+      "view",
+      "first_name",
+      "last_name",
+      "phone_number",
       "total_finished",
-      "home_location",
-      "work_location",
+      "total_rides",
       "btn",
     ],
   });
   const [dialog, setDialog] = useState(false);
-  const [dialogData, setDialogData] = useState([]);
+  const [dialogData, setDialogData] = useState();
+  const [renderTable, setRenderTable] = useState(1);
+  const [search, setSearch] = useState("");
+  const [phone, setPhone] = useState("");
+
+  // car class delete
+  const Clients_Delete = (e) => {
+    axios
+      .post(`${process.env.REACT_APP_BASE_URL}/user/delete`, e, {
+        headers: {
+          Authorization: `Bearer ${token.substring(1, token.length - 1)}`,
+        },
+      })
+      .then((res) => {
+        alert.success("Car class deleted.");
+        setRenderTable(renderTable + 1);
+      })
+      .catch((err) => alert("Car class not deleted."));
+  };
+
+  useEffect(() => {
+    axios
+      .post(
+        `${process.env.REACT_APP_BASE_URL}/riders/get`,
+        { limit: parseInt(pageLimit), page: parseInt(page), search: search },
+        {
+          headers: {
+            Authorization: `Bearer ${token.substring(1, token.length - 1)}`,
+          },
+        }
+      )
+      .then((res) => {
+        setDataBase(res.data.data.data);
+        setTotal(res.data.data.total);
+      })
+      .catch((err) => {
+        if (err.response.data.code == 401) {
+          localStorage.removeItem("token");
+          history.push("/login");
+        }
+      });
+  }, [pageLimit, page, dialog, renderTable, search]);
+
   useEffect(() => {
     const data = dataBase.map((item) => {
       const testData = {
-        user: (
-          <MyDiv line width="150px" margin="8px 0 8px 0">
-            <UserImage src={item.img} />
-            <MyDiv>
-              <UserName>{item.user_name}</UserName>
-              <UserPhone>{item.phone}</UserPhone>
-            </MyDiv>
+        view: (
+          <MyDiv lineCenter>
+            <MyButton
+              onClick={() => {
+                setPhone(item.phone_number);
+                setDialog(true);
+              }}
+              icon
+              text={<MessageIcon />}
+            />
           </MyDiv>
         ),
-        total_rides: item.total_rides,
+        first_name: item.first_name,
+        last_name: item.last_name,
+        phone_number: item.phone_number,
         total_finished: item.total_finished,
-        home_location: item.home_location,
-        work_location: item.work_location,
+        total_rides: item.total_rides,
         btn: (
-          <MyDiv line>
+          <MyDiv lineCenter>
             <MyButton
               onClick={() => {
                 setDialog(true);
@@ -79,30 +117,62 @@ function Clients(props) {
               icon
               text={<EditSVG />}
             />
-            <MyButton icon text={<DeleteSVG />} />
+            <MyButton
+              onClick={() => {
+                Clients_Delete(item);
+              }}
+              icon
+              text={<DeleteSVG />}
+            />
           </MyDiv>
         ),
       };
       return testData;
     });
     setNewData({ ...newData, body: data });
-  }, []);
+  }, [dataBase]);
 
   return (
     <>
       <MyDiv line margin="0 0 18px 0">
-        <MenuName>Clients list</MenuName>
-        <ActivUser>Active drivers: 10</ActivUser>
-        <MyDiv width="230px">
-          <MyInput search placeholder="Search" />
-        </MyDiv>
+        <MenuName borderNone>Car Classes list</MenuName>
+        <MyInput
+          search
+          width="220px"
+          placeholder="Search"
+          onChange={(e) => setSearch(e.target.value)}
+        />
       </MyDiv>
-      <MyTable data={newData} total="100" pageLimit="10" />
+      <MyTable
+        data={newData}
+        total={total}
+        set_page_limit={(e) => setPageLimit(e)}
+        set_page={(e) => setPage(e)}
+      />
       {dialog && (
         <MyDialog
-          title="Clients Information"
-          body={<ClientDialog dialogData={dialogData} />}
-          close={(e) => setDialog(e)}
+          title={phone ? "Sending Message" : "Edit rider"}
+          body={
+            phone ? (
+              <ClientsMessage
+                phone={phone}
+                close={(e) => {
+                  setDialog(e);
+                }}
+              />
+            ) : (
+              <CreateClient
+                dialog_data={dialogData}
+                close={(e) => {
+                  setDialog(e);
+                }}
+              />
+            )
+          }
+          close={(e) => {
+            setDialog(e);
+            setPhone("");
+          }}
         />
       )}
     </>

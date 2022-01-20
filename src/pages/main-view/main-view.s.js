@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 
 export const Sidebar = styled.div`
-  width: ${({ menu }) => (menu ? "280px" : "90px")};
+  min-width: ${({ menu }) => (menu ? "200px" : "90px")};
   height: calc(100vh - 40px);
   padding-top: ${({ menu }) => (menu ? "9px" : "")};
   transition: all 0.3s ease-in-out;

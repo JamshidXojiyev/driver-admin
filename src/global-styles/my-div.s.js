@@ -14,6 +14,14 @@ const lineStyle = css`
   align-content: center;
   align-items: center;
 `;
+const lineCenterStyle = css`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+`;
 const lineBottomStyle = css`
   display: flex;
   flex-direction: row;
@@ -40,11 +48,13 @@ const bothSidesStyle = css`
 `;
 
 export const MyDiv = styled.div`
-  ${({ center, line, lineBottom, bothSides, flex }) =>
+  ${({ center, line, lineBottom, bothSides, flex, lineCenter }) =>
     center
       ? centerStyled
       : line
       ? lineStyle
+      : lineCenter
+      ? lineCenterStyle
       : lineBottom
       ? lineBottomStyle
       : bothSides

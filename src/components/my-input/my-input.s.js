@@ -131,3 +131,12 @@ export const LabelStyle = styled.label`
   width: 100%;
   padding-bottom: 7px;
 `;
+export const ErrorMessage = styled.h1`
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
+  font-size: 10px;
+  color: #ff333f;
+  text-align: left;
+  width: 100%;
+  padding-top: 4px;
+`;

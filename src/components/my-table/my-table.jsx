@@ -14,14 +14,17 @@ import MyButton from "../my-button/my-button";
 import { ReactComponent as BottomIcon } from "../../assats/icons/bottom.svg";
 
 function MyTable(props) {
-  const [countItems, setCountItems] = useState(10);
+  const [pageLimit, setpageLimit] = useState(10);
   const [page, setPage] = useState(1);
   const [pages, setPages] = useState();
   useEffect(() => {
     setPage(1);
-    setPages(Math.ceil(props.total / countItems));
-  }, [countItems]);
-  useEffect(() => {}, [page]);
+    setPages(Math.ceil(props.total / pageLimit));
+  }, [pageLimit]);
+  useEffect(() => {
+    props.set_page(page);
+    props.set_page_limit(pageLimit);
+  }, [pageLimit, page]);
   return (
     <>
       <TableStyle>
@@ -48,9 +51,9 @@ function MyTable(props) {
             width="80px"
             table
             roundBorder
-            value={countItems}
-            options={["5", "10", "20", "30", "50", "100"]}
-            onChange={(e) => setCountItems(e.target.value)}
+            value={pageLimit}
+            options={["2", "5", "10", "20", "30", "50", "100"]}
+            onChange={(e) => setpageLimit(e.target.value)}
           />
           <MyButton
             pagination

@@ -35,6 +35,7 @@ import Orders from "../Orders/orders";
 import Rides from "../Rides/rides";
 import Moderators from "../Moderators/moderators";
 import CarClasses from "../Car-Classes/car-classes";
+import Drivers from "../Drivers/drivers";
 
 function MainView(props) {
   const location = useLocation();
@@ -110,6 +111,7 @@ function MainView(props) {
             <Route exact path="/orders" component={Orders} />
             <Route exact path="/rides" component={Rides} />
             <Route exact path="/clients" component={Clients} />
+            <Route exact path="/drivers" component={Drivers} />
             <Route exact path="/car-classes" component={CarClasses} />
             <Route exact path="/moderators" component={Moderators} />
           </Switch>

@@ -43,6 +43,8 @@ export const DialogContainer = styled.div`
   min-width: 500px;
   padding: 15px 21px;
   z-index: 999;
+  max-height: calc(100vh - 10%);
+  overflow-y: scroll;
 `;
 export const DialogHeader = styled.div`
   border-bottom: 1px solid #f7f9fc;
