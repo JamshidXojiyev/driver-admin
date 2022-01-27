@@ -23,4 +23,5 @@ export const CheckLabel = styled.label`
   flex-wrap: nowrap;
   align-content: center;
   align-items: center;
+  text-transform: capitalize;
 `;

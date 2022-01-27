@@ -17,11 +17,11 @@ export const ItemBlock = styled.div`
   && {
     min-width: 200px;
     height: 80px;
-    background: ${({ bg }) => bg};
+    background: ${({ activ, bg }) => (activ ? "" : bg)};
     border-radius: 8px;
     cursor: pointer;
     padding: 0 16px;
-
+    border: 1px solid ${({ color }) => color};
     path {
       fill: ${({ color }) => color};
     }
@@ -35,7 +35,7 @@ export const ItemBlock = styled.div`
     }
 
     :hover svg:last-child {
-      margin-left: 4px;
+      /* margin-left: 4px; */
     }
 
     display: flex;
@@ -55,30 +55,30 @@ export const ItemBlock = styled.div`
   }
 `;
 
-export const LeftBtn = styled.button`
-  background: linear-gradient(70deg, #ffffff 0%, rgba(255, 255, 255, 0) 66.67%);
-  width: 76px;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  border: 0;
-  cursor: pointer;
-`;
-export const RightBtn = styled.button`
-  cursor: pointer;
-  border: 0;
-  background: linear-gradient(
-    270deg,
-    #ffffff 0%,
-    rgba(255, 255, 255, 0) 66.67%
-  );
-  width: 76px;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-`;
+// export const LeftBtn = styled.button`
+//   background: linear-gradient(70deg, #ffffff 0%, rgba(255, 255, 255, 0) 66.67%);
+//   width: 76px;
+//   height: 100%;
+//   position: absolute;
+//   top: 0;
+//   left: 0;
+//   bottom: 0;
+//   border: 0;
+//   cursor: pointer;
+// `;
+// export const RightBtn = styled.button`
+//   cursor: pointer;
+//   border: 0;
+//   background: linear-gradient(
+//     270deg,
+//     #ffffff 0%,
+//     rgba(255, 255, 255, 0) 66.67%
+//   );
+//   width: 76px;
+//   height: 100%;
+//   position: absolute;
+//   top: 0;
+//   right: 0;
+//   bottom: 0;
+// `;
 export const ViewIcoin = styled(RightIcon)``;

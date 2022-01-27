@@ -9,9 +9,9 @@ import {
   TrStyle,
 } from "./my-table.s";
 import { MyDiv } from "../../global-styles/my-div.s";
-import MySelect from "../my-select/my-select";
 import MyButton from "../my-button/my-button";
 import { ReactComponent as BottomIcon } from "../../assats/icons/bottom.svg";
+import MySelect from "../my-select/my-select";
 
 function MyTable(props) {
   const [pageLimit, setpageLimit] = useState(10);
@@ -20,13 +20,20 @@ function MyTable(props) {
   useEffect(() => {
     setPage(1);
     setPages(Math.ceil(props.total / pageLimit));
-  }, [pageLimit]);
+  }, [pageLimit, props.total]);
   useEffect(() => {
-    props.set_page(page);
-    props.set_page_limit(pageLimit);
+    if (!props.pageNone) {
+      props.set_page(page);
+      props.set_page_limit(pageLimit);
+    }
   }, [pageLimit, page]);
-  return (
-    <>
+  return !props.data?.body ? (
+    "404"
+  ) : (
+    <div>
+    <div style={{
+      overflowX:"auto"
+    }}>
       <TableStyle>
         <TrStyle>
           {props.data.header.map((item, index) => (
@@ -34,7 +41,7 @@ function MyTable(props) {
           ))}
         </TrStyle>
         {props.data.body.map((item, index) => (
-          <TrStyle key={index}>
+          <TrStyle key={index} onDoubleClick={() => props.itemValue(item)}>
             {props.data.order.map((subItem, subIndex) => (
               <TdStyle key={subIndex}>
                 {typeof subItem === "string" ? item[subItem] : item(subItem)}
@@ -43,44 +50,48 @@ function MyTable(props) {
           </TrStyle>
         ))}
       </TableStyle>
-      <TableBottom>
-        <TotalUserStyle>Total users: {props.total}</TotalUserStyle>
-        <MyDiv line gap="12px" width="auto">
-          <H3>Count items: </H3>
-          <MySelect
-            width="80px"
-            table
-            roundBorder
-            value={pageLimit}
-            options={["2", "5", "10", "20", "30", "50", "100"]}
-            onChange={(e) => setpageLimit(e.target.value)}
-          />
-          <MyButton
-            pagination
-            left
-            disabled={page == "1" ? true : false}
-            text={<BottomIcon />}
-            onClick={() => page !== "1" && setPage(page - 1)}
-          />
-          <MySelect
-            width="80px"
-            table
-            roundBorder
-            value={page}
-            options={Array.from(Array(pages).keys(), (x) => x + 1)}
-            onChange={(e) => setPage(e.target.value)}
-          />
-
-          <MyButton
-            pagination
-            right
-            disabled={page == pages ? true : false}
-            text={<BottomIcon />}
-            onClick={() => page !== pages && setPage(parseInt(page) + 1)}
-          />
-        </MyDiv>
-      </TableBottom>
-    </>
+    </div>
+      {props.pageNone ? (
+        ""
+      ) : (
+        <TableBottom>
+          <TotalUserStyle>Total items: {props.total}</TotalUserStyle>
+          <MyDiv line gap="12px" width="auto">
+            <H3>Count items: </H3>
+            <MySelect
+              width="80px"
+              table
+              roundBorder
+              value={pageLimit}
+              options={["2", "5", "10", "20", "30", "50", "100"]}
+              onChange={(e) => setpageLimit(e.target.value)}
+            />
+            <MyButton
+              pagination
+              left
+              disabled={page == "1" ? true : false}
+              text={<BottomIcon />}
+              onClick={() => page !== "1" && setPage(page - 1)}
+            />
+            <MySelect
+              width="80px"
+              table
+              roundBorder
+              value={page}
+              options={Array.from(Array(pages).keys(), (x) => x + 1)}
+              onChange={(e) => setPage(e.target.value)}
+            />
+            <MyButton
+              pagination
+              right
+              disabled={page == pages ? true : false}
+              text={<BottomIcon />}
+              onClick={() => page !== pages && setPage(parseInt(page) + 1)}
+            />
+          </MyDiv>
+        </TableBottom>
+      )}
+    </div>
   );
 }
 

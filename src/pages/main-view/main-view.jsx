@@ -19,6 +19,7 @@ import {
   UserName,
   UserPhone,
   BodyContent,
+  Name,
 } from "./main-view.s";
 import UserIMG from "../../assats/images/User.png";
 import { MenuData } from "./menu-data";
@@ -36,6 +37,9 @@ import Rides from "../Rides/rides";
 import Moderators from "../Moderators/moderators";
 import CarClasses from "../Car-Classes/car-classes";
 import Drivers from "../Drivers/drivers";
+import Shift from "../Shift/shift";
+import ShiftHistory from "../Shift/shift-history";
+import ShiftsPays from "../Shift/shifts-pays";
 
 function MainView(props) {
   const location = useLocation();
@@ -43,34 +47,30 @@ function MainView(props) {
   const user = localStorage.getItem("token");
 
   return (
-    <MyDiv height="100%" line padding="20px 20px 20px 8px">
+    <MyDiv height="100%" line padding="20px 16px 20px 8px">
       <Sidebar menu={menuType}>
-        <User menu={menuType}>
+        <User>
           <ImageBorder>
             <UserImage src={UserIMG} />
           </ImageBorder>
-          {menuType && (
-            <MyDiv margin="0 0 0 8px ">
-              <UserName>Samantha</UserName>
-              <UserPhone>+998 (99) 436-46-15</UserPhone>
-            </MyDiv>
-          )}
+          <Name>
+            <UserName>Samantha</UserName>
+            <UserPhone>+998 (99) 436-46-15</UserPhone>
+          </Name>
         </User>
-        <Title menu={menuType}>MAIN {menuType && "MENU"} </Title>
         <MenuList>
           {MenuData.map((item, index) => (
             <Link to={item.url}>
               <MenuItem
                 menu={menuType}
-                activ={location.pathname === item.url ? true : false}
+                activ={location.pathname.search(item.url) < 0 ? false : true}
                 key={index}
               >
                 {location.pathname === item.url && (
                   <MenuItemAddon className="top" />
                 )}
                 {item.icon}
-                {menuType && <MenuName>{item.name}</MenuName>}
-
+                <MenuName>{item.name}</MenuName>
                 {location.pathname === item.url && (
                   <MenuItemAddon className="bottom" />
                 )}
@@ -80,7 +80,7 @@ function MainView(props) {
         </MenuList>
       </Sidebar>
 
-      <Body>
+      <Body menu={menuType}>
         <NavigatorStyle>
           <MyDiv line>
             <MyButton
@@ -100,22 +100,24 @@ function MainView(props) {
             <UserImage src={UserIMG} />
           </NavBtnStyle>
         </NavigatorStyle>
-        <BodyContent>
-          <Switch>
-            <Route
-              exact
-              path="/"
-              render={() => <Redirect to={user ? "/dashboard" : "/login"} />}
-            />
-            <Route exact path="/dashboard" component={Dashboard} />
-            <Route exact path="/orders" component={Orders} />
-            <Route exact path="/rides" component={Rides} />
-            <Route exact path="/clients" component={Clients} />
-            <Route exact path="/drivers" component={Drivers} />
-            <Route exact path="/car-classes" component={CarClasses} />
-            <Route exact path="/moderators" component={Moderators} />
-          </Switch>
-        </BodyContent>
+        <Switch>
+          <Route
+            exact
+            path="/"
+            render={() => <Redirect to={user ? "/dashboard" : "/login"} />}
+          />
+          <Route exact path="/dashboard" component={Dashboard} />
+          <Route exact path="/orders" component={Orders} />
+          <Route exact path="/rides" component={Rides} />
+          <Route exact path="/clients" component={Clients} />
+          <Route exact path="/drivers" component={Drivers} />
+          <Route exact path="/shift" component={Shift} />
+          <Route exact path="/car-classes" component={CarClasses} />
+          <Route exact path="/moderators" component={Moderators} />
+
+          <Route exact path="/shift/history" component={ShiftHistory} />
+          <Route exact path="/shift/pays" component={ShiftsPays} />
+        </Switch>
       </Body>
     </MyDiv>
   );

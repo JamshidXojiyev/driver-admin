@@ -1,13 +1,10 @@
 import React, { useState } from "react";
 import MyInput from "../../components/my-input/my-input";
-import MyTabs from "../../components/my-tabs/my-tabs";
+import RidersGet from "../../components/rides-get/rides-get";
 import { ActivUser, MenuName } from "../../global-styles/body-title";
 import { MyDiv } from "../../global-styles/my-div.s";
-import Completed from "./tabs/completed";
 
 function Rides(props) {
-  const [tab, setTab] = useState("Completed");
-  const tabs = ["Completed", "Pre cancelled"];
   return (
     <>
       <MyDiv line margin="0 0 18px 0">
@@ -17,10 +14,7 @@ function Rides(props) {
           <MyInput search placeholder="Search" />
         </MyDiv>
       </MyDiv>
-      <MyTabs todoItem={(e) => setTab(e)} list={tabs} />
-      <MyDiv margin="24px 0 0 0">
-        {tab === "Completed" ? <h1>Completed</h1> : <h1>404</h1>}
-      </MyDiv>
+      <RidersGet rider_id="" />
     </>
   );
 }

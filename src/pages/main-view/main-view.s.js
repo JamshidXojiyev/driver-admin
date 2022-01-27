@@ -1,26 +1,25 @@
 import styled, { css } from "styled-components";
 
 export const Sidebar = styled.div`
-  min-width: ${({ menu }) => (menu ? "200px" : "90px")};
+  position: fixed;
+  top: 20px;
+  left: 8px;
+  width: ${({ menu }) => (menu ? "200px" : "57px")};
   height: calc(100vh - 40px);
   padding-top: ${({ menu }) => (menu ? "9px" : "")};
-  transition: all 0.3s ease-in-out;
+  transition: all 0.1s ease-in-out;
 `;
 export const User = styled.div`
-  transition: all 0.3s ease-in-out;
-  ${({ menu }) =>
-    menu
-      ? css`
-          margin-left: 4px;
-        `
-      : css`
-          justify-content: center;
-        `};
+  overflow: hidden;
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
   align-items: center;
   align-content: center;
+`;
+export const Name = styled.div`
+  margin-left: 18px;
+  max-height: 44px;
 `;
 export const ImageBorder = styled.div`
   border: 2px solid #dfe0eb;
@@ -43,42 +42,15 @@ export const UserPhone = styled.h2`
   font-style: normal;
   font-weight: normal;
   font-size: 11px;
-  display: flex;
-  align-items: center;
   color: #ffffff;
   opacity: 0.6;
 `;
-export const Title = styled.h1`
-  transition: all 0.3s ease-in-out;
-  ${({ menu }) =>
-    menu
-      ? css`
-          margin-left: 8px;
-        `
-      : css`
-          text-align: center;
-        `};
-  margin-top: 27px;
-  font-family: "Montserrat", sans-serif;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 12px;
-  line-height: 15px;
-  color: rgba(255, 255, 255, 0.6);
-  margin-bottom: 15px;
+export const MenuList = styled.ul`
+  margin-top: 18px;
 `;
-export const MenuList = styled.ul``;
 export const MenuItem = styled.li`
-  ${({ menu }) =>
-    menu
-      ? css`
-          justify-content: flex-start;
-        `
-      : css`
-          justify-content: center;
-        `};
-  width: 100%;
   height: 41px;
+  overflow: hidden;
   ${({ activ }) =>
     activ &&
     css`
@@ -91,8 +63,12 @@ export const MenuItem = styled.li`
   flex-wrap: nowrap;
   align-content: center;
   align-items: flex-end;
-  padding: 12px 14px;
+  padding: 12px;
   margin-bottom: 4px;
+  && svg {
+    min-width: 24px;
+    width: 24px;
+  }
   && path {
     fill: ${({ activ }) => activ && "#5459ea!important"};
   }
@@ -117,35 +93,16 @@ export const MenuName = styled.h3`
   font-size: 14px;
   line-height: 17px;
   color: #ffffff;
-  margin-left: 18px;
+  margin-left: 20px;
 `;
 export const Body = styled.div`
-  width: 100%;
-  height: calc(100vh - 40px);
+  margin: ${({ menu }) => (menu ? "0 0 0 200px" : "0 0 0 57px")};
+  width: calc(100% - ${({ menu }) => (menu ? "200px" : "57px")});
+  min-height: calc(100vh - 40px);
   background: #ffffff;
   border-radius: 20px;
   padding: 18px 24px;
-`;
-export const BodyContent = styled.div`
-  padding: 8px 12px;
-  width: 100%;
-  height: calc(100% - 60px);
-  overflow-y: auto;
-
-  /* width */
-  ::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-    cursor: pointer;
-    position: fixed;
-    right: 0;
-  }
-  /* Handle */
-  ::-webkit-scrollbar-thumb {
-    border-radius: 16px;
-    background: #000;
-    cursor: pointer;
-  }
+  transition: all 0.1s ease-in-out;
 `;
 
 export const NavigatorStyle = styled.div`

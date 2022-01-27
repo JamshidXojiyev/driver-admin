@@ -12,11 +12,14 @@ import axios from "axios";
 import CreateCarClass from "./create-car-class";
 import { useAlert } from "react-alert";
 import { useHistory } from "react-router";
+import Loading from "../../components/loading/loading";
 
 function CarClasses(props) {
   const alert = useAlert();
   const history = useHistory();
   const token = localStorage.getItem("token");
+  const [loading, setLoading] = useState(true);
+
   const [dataBase, setDataBase] = useState([]);
   const [total, setTotal] = useState(1);
   const [pageLimit, setPageLimit] = useState(10);
@@ -71,6 +74,7 @@ function CarClasses(props) {
   };
 
   useEffect(() => {
+    setLoading(true);
     axios
       .post(
         `${process.env.REACT_APP_BASE_URL}/car-class/get`,
@@ -82,10 +86,12 @@ function CarClasses(props) {
         }
       )
       .then((res) => {
+        setLoading(false);
         setDataBase(res.data.data.data);
         setTotal(res.data.data.total);
       })
       .catch((err) => {
+        setLoading(false);
         if (err.response.data.code == 401) {
           localStorage.removeItem("token");
           history.push("/login");
@@ -137,6 +143,7 @@ function CarClasses(props) {
 
   return (
     <>
+      <Loading loading={loading} onWindow />
       <MyDiv bothSides margin="0 0 18px 0">
         <MenuName borderNone>Car Classes list</MenuName>
         <MyButton

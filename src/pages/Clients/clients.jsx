@@ -13,11 +13,15 @@ import ClientsMessage from "./clients-message";
 import MyInput from "../../components/my-input/my-input";
 import { useHistory } from "react-router";
 import MyTable from "../../components/my-table/my-table";
+import Loading from "../../components/loading/loading";
+import RidersGet from "../../components/rides-get/rides-get";
 
 function Clients(props) {
   const alert = useAlert();
   const history = useHistory();
   const token = localStorage.getItem("token");
+  const [loading, setLoading] = useState(true);
+
   const [dataBase, setDataBase] = useState([]);
   const [total, setTotal] = useState(1);
   const [pageLimit, setPageLimit] = useState(10);
@@ -48,6 +52,7 @@ function Clients(props) {
   const [renderTable, setRenderTable] = useState(1);
   const [search, setSearch] = useState("");
   const [phone, setPhone] = useState("");
+  const [rider_id, set_rider_id] = useState();
 
   // car class delete
   const Clients_Delete = (e) => {
@@ -65,6 +70,7 @@ function Clients(props) {
   };
 
   useEffect(() => {
+    setLoading(true);
     axios
       .post(
         `${process.env.REACT_APP_BASE_URL}/riders/get`,
@@ -78,12 +84,14 @@ function Clients(props) {
       .then((res) => {
         setDataBase(res.data.data.data);
         setTotal(res.data.data.total);
+        setLoading(false);
       })
       .catch((err) => {
         if (err.response.data.code == 401) {
           localStorage.removeItem("token");
           history.push("/login");
         }
+        setLoading(false);
       });
   }, [pageLimit, page, dialog, renderTable, search]);
 
@@ -91,9 +99,9 @@ function Clients(props) {
     const data = dataBase.map((item) => {
       const testData = {
         view: (
-          <MyDiv lineCenter>
+          <MyDiv  lineCenter>
             <MyButton
-              onClick={() => {
+              onClickCapture={(e) => {
                 setPhone(item.phone_number);
                 setDialog(true);
               }}
@@ -126,16 +134,35 @@ function Clients(props) {
             />
           </MyDiv>
         ),
+        id: item._id,
       };
       return testData;
     });
     setNewData({ ...newData, body: data });
   }, [dataBase]);
-
+  if (rider_id) {
+    return (
+      <>
+        <MyDiv line margin="0 0 18px 0">
+          <MenuName borderNone onClick={() => set_rider_id(undefined)}>
+            <span>&#8249;</span> Clients list
+          </MenuName>
+          {/* <MyInput
+            search
+            width="220px"
+            placeholder="Search"
+            // onChange={(e) => setSearch(e.target.value)}
+          /> */}
+        </MyDiv>
+        <RidersGet rider_id={rider_id && rider_id} />
+      </>
+    );
+  }
   return (
     <>
+      <Loading loading={loading} onWindow />
       <MyDiv line margin="0 0 18px 0">
-        <MenuName borderNone>Car Classes list</MenuName>
+        <MenuName borderNone>Clients list</MenuName>
         <MyInput
           search
           width="220px"
@@ -144,6 +171,9 @@ function Clients(props) {
         />
       </MyDiv>
       <MyTable
+        itemValue={(e) => {
+          set_rider_id(e.id);
+        }}
         data={newData}
         total={total}
         set_page_limit={(e) => setPageLimit(e)}

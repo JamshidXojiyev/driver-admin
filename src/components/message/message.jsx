@@ -32,44 +32,16 @@ function MyMessage(props) {
         <MyButton onClick={() => setOpen(!open)} icon text={<CloseIcon />} />
       </MyDiv>
       <ChatsBlock>
-        <ChatStyle>
-          <Title>Created</Title>
-          <Message>
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Commodi,
-            itaque.
-          </Message>
-          <MessageData>04.12.2021 20:30:37</MessageData>
-        </ChatStyle>
-
-        <ChatStyle>
-          <Title>Created</Title>
-          <Message>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus
-            voluptatem harum nostrum facilis libero. Doloremque dicta ratione,
-            necessitatibus enim dignissimos recusandae in illum sint corporis
-            repellendus placeat pariatur molestias nisi.
-          </Message>
-          <MessageData>04.12.2021 20:30:37</MessageData>
-        </ChatStyle>
-
-        <ChatStyle>
-          <Title>Created</Title>
-          <Message>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Provident
-            maiores rem sunt quidem error magnam amet.
-          </Message>
-          <MessageData>04.12.2021 20:30:37</MessageData>
-        </ChatStyle>
-
-        <ChatStyle>
-          <Title>Created</Title>
-          <Message>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta,
-            voluptatem, provident, minus delectus magni ab excepturi ducimus
-            aperiam possimus saepe hic laudantium dignissimos atque!
-          </Message>
-          <MessageData>04.12.2021 20:30:37</MessageData>
-        </ChatStyle>
+        {props.data.map((item, index) => (
+          <ChatStyle key={index}>
+            <Title>{item.state}</Title>
+            <Message>Driver name: {item.driver_name}</Message>
+            <Message>Driver phone: {item.driver_phone}</Message>
+            <MessageData>
+              {new Date(item.date).toLocaleDateString("ru")}
+            </MessageData>
+          </ChatStyle>
+        ))}
       </ChatsBlock>
     </MessageStyle>
   );

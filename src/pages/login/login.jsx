@@ -35,11 +35,11 @@ function LogIn(props) {
           (value) => Number.isNaN(Number(value[0]))
         )
         .max(30, "Maximum length 30 characters")
-        .min(5, "Minimum length is 5 characters")
+        .min(3, "Minimum length is 5 characters")
         .required("Required"),
       password: Yup.string()
         .max(30, "Maximum length 30 characters")
-        .min(5, "Minimum length is 5 characters")
+        .min(3, "Minimum length is 5 characters")
         .required("Required"),
     }),
     onSubmit: (values) => {

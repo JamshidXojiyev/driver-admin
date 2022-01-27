@@ -2,18 +2,41 @@ import styled from "styled-components";
 
 export const TableStyle = styled.table`
   width: 100%;
-  border-spacing: 0;
+  /* display: block; */
+  overflow: auto;
+  border-spacing: 0px 5px;
 `;
 export const TrStyle = styled.tr`
   && {
+    overflow: hidden;
+    :hover {
+      background-color: #f7f8fa;
+      td {
+        :first-child {
+          border-top-left-radius: 8px;
+          border-bottom-left-radius: 8px;
+        }
+        :last-child {
+          border-top-right-radius: 8px;
+          border-bottom-right-radius: 8px;
+        }
+      }
+    }
     :first-child {
       height: 47px;
       background: #f7f8fa;
+    }
+    :nth-child(2) {
+      td {
+        padding-top: 8px;
+      }
     }
   }
 `;
 export const ThStyle = styled.th`
   && {
+    white-space:nowrap;
+    padding: 0 10px;
     :first-child {
       border-top-left-radius: 8px;
       border-bottom-left-radius: 8px;
@@ -26,7 +49,6 @@ export const ThStyle = styled.th`
     }
     border-top: 1px solid #eff0f4;
     border-bottom: 1px solid #eff0f4;
-    padding: 0 4px;
 
     font-family: "Montserrat", sans-serif;
     font-style: normal;
@@ -36,14 +58,14 @@ export const ThStyle = styled.th`
   }
 `;
 export const TdStyle = styled.td`
-  padding: 0 4px;
-  /* min-height: 47px; */
-  text-align: center;
-  font-family: "Poppins", sans-serif;
-  font-weight: 500;
-  font-size: 11px;
-  color: #192a3e;
-  padding-bottom: 4px;
+  && {
+    padding: 8px 4px;
+    text-align: center;
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+    font-size: 11px;
+    color: #192a3e;
+  }
 `;
 export const TableBottom = styled.div`
   display: flex;
@@ -72,3 +94,4 @@ export const H3 = styled.h3`
   font-size: 12px;
   color: #232638;
 `;
+export const TableLoding = styled.div``;

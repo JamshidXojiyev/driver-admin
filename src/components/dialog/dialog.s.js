@@ -40,11 +40,12 @@ export const DialogContainer = styled.div`
   background: rgba(16, 16, 16, 0.2);
   background: #ffffff;
   border-radius: 8px;
-  min-width: 500px;
+  /* min-width: 350px; */
+  max-width: 500px;
   padding: 15px 21px;
   z-index: 999;
   max-height: calc(100vh - 10%);
-  overflow-y: scroll;
+  overflow-y: auto;
 `;
 export const DialogHeader = styled.div`
   border-bottom: 1px solid #f7f9fc;

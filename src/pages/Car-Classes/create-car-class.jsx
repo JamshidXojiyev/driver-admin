@@ -38,7 +38,6 @@ function CreateCarClass(props) {
         .max(25, "Maximum length 25 characters")
         .min(3, "Minimum length is 3 characters")
         .required("Required"),
-      delivery_cost: Yup.number(),
       starting_value: Yup.number().required("Required"),
       free_km: Yup.number().required("Required"),
       per_km_value: Yup.number().required("Required"),
@@ -47,14 +46,14 @@ function CreateCarClass(props) {
       out_of_branch: Yup.number().required("Required"),
     }),
     onSubmit: (values) => {
-      console.log(values);
+      console.log("asdasdasdasdas");
       if (!values.image) {
         set_image_err(true);
       } else {
         axios
           .post(
             `${process.env.REACT_APP_BASE_URL}/car-class/${
-              props.user_id ? `update/${props.user_id}` : "create/"
+              props.user_id ? `update/${props.user_id}` : "create"
             }`,
             values,
             {
@@ -67,7 +66,7 @@ function CreateCarClass(props) {
             alert.success("Car class created.");
             props.close(false);
           })
-          .catch((err) => console.log(err));
+          .catch((err) => console.log(err.message));
       }
     },
   });

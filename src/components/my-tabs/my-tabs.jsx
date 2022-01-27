@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { ReactComponent as FileIcon } from "../../assats/icons/file.svg";
 import { MyDiv } from "../../global-styles/my-div.s";
 import { ItemBlock, TabsStyle, ViewIcoin } from "./my-tabs.s";
 function MyTabs(props) {
+  const [activ, setActiv] = useState(0);
   const styleData = [
     {
       color: "#3366FF",
@@ -25,18 +26,23 @@ function MyTabs(props) {
       bg: "rgba(255, 51, 63, 0.2)",
     },
   ];
+
   return (
     <MyDiv relative>
       <TabsStyle>
         {props.list.map((item, index) => (
           <ItemBlock
-            onClick={() => props.todoItem(item)}
+            activ={item.id == activ}
+            onClick={() => {
+              props.todoItem(item.id);
+              setActiv(item.id);
+            }}
             key={index}
             color={styleData[index % styleData.length].color}
             bg={styleData[index % styleData.length].bg}
           >
             <FileIcon />
-            {item}
+            {item.value}
             <ViewIcoin />
           </ItemBlock>
         ))}
