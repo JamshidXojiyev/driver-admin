@@ -41,7 +41,7 @@ function MyInput(props) {
                 type="button"
                 onClick={() => setOpen(!open)}
                 base
-                text={open ? "show" : "hedy"}
+                text={open ? "Show" : "Hide"}
               />
             </SearchIconStyle>
           )}

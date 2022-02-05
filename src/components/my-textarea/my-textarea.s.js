@@ -42,7 +42,7 @@ const errorStyle = css`
 `;
 
 export const TextareaStyle = styled.textarea`
-  width: 100%;
+  width: ${({ width }) => (width ? width : "100%")};
   height: 100px;
   padding: 13px 11px;
   border: 1px solid #e4e6ee;

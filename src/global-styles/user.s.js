@@ -3,9 +3,9 @@ import styled, { css } from "styled-components";
 export const UserImage = styled.img`
   width: ${({ width }) => (width ? width : "38px")};
   height: ${({ height }) => (height ? height : "38px")};
-  border-radius: 50% !important;
-  margin: 0 5px 0 5px;
-  object-fit: scale-down;
+  border-radius: 12px !important;
+  margin: 0 16px 0 5px;
+  object-fit: cover;
   ${({ chat }) =>
     chat &&
     css`

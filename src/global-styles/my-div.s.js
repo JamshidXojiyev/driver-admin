@@ -80,4 +80,6 @@ export const MyDiv = styled.div`
   padding: ${({ padding }) => padding};
   position: ${({ relative }) => relative && "relative"};
   background-color: ${({ bg }) => bg && bg};
+  border-right: ${({ border_right }) => border_right};
+  float: ${({ float }) => float};
 `;

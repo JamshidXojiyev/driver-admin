@@ -14,13 +14,14 @@ import MyTable from "../../components/my-table/my-table";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { MyForm } from "../../global-styles/form.s";
+import { useAlert } from "react-alert";
 
 function ShiftsPays(props) {
   const token = localStorage.getItem("token");
+  const alert = useAlert();
+
   const [pay_type, set_pay_type] = useState("");
   const [render, setRender] = useState(false);
-  const [loading, setLoading] = useState(false);
-
   const [pay, set_pay] = useState([]);
   const [dataBase, setDataBase] = useState([]);
   const [drivers, setDrivers] = useState([]);
@@ -100,8 +101,6 @@ function ShiftsPays(props) {
       value: Yup.number().required("Required"),
     }),
     onSubmit: (val) => {
-      console.log(val);
-
       axios
         .post(
           `${process.env.REACT_APP_BASE_URL}/shift-${pay_type}`,
@@ -122,7 +121,9 @@ function ShiftsPays(props) {
         .then(() => {
           formik.resetForm({ driver: "", value: "", comment: "" });
           setRender(!render);
-        });
+          alert.success("Saccess.");
+        })
+        .catch((err) => alert.error(err.message));
     },
   });
 
@@ -162,7 +163,7 @@ function ShiftsPays(props) {
               search
               placeholder="Search driver"
               name="driver"
-              value={parseFloat(formik.values.driver).toLocaleString("en-EN")}
+              value={formik.values.driver}
               onChange={(e) => formik.setFieldValue("driver", e)}
               error={
                 formik.touched.driver && formik.errors.driver ? true : false
@@ -209,7 +210,7 @@ function ShiftsPays(props) {
           </MyDiv>
         </MyDiv>
       </MyForm>
-      <MyTable loading={loading} pageNone data={newData} />
+      <MyTable pageNone data={newData} />
     </>
   );
 }

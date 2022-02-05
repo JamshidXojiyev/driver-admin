@@ -16,8 +16,8 @@ export const TabsStyle = styled.div`
 export const ItemBlock = styled.div`
   && {
     min-width: 200px;
-    height: 80px;
-    background: ${({ activ, bg }) => (activ ? "" : bg)};
+    min-height: 80px;
+    background: ${({ activ, bg }) => (activ ? bg : "")};
     border-radius: 8px;
     cursor: pointer;
     padding: 0 16px;
@@ -33,11 +33,6 @@ export const ItemBlock = styled.div`
       fill: #2e3a59;
       stroke: #2e3a59;
     }
-
-    :hover svg:last-child {
-      /* margin-left: 4px; */
-    }
-
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
@@ -54,31 +49,4 @@ export const ItemBlock = styled.div`
     color: ${({ color }) => color};
   }
 `;
-
-// export const LeftBtn = styled.button`
-//   background: linear-gradient(70deg, #ffffff 0%, rgba(255, 255, 255, 0) 66.67%);
-//   width: 76px;
-//   height: 100%;
-//   position: absolute;
-//   top: 0;
-//   left: 0;
-//   bottom: 0;
-//   border: 0;
-//   cursor: pointer;
-// `;
-// export const RightBtn = styled.button`
-//   cursor: pointer;
-//   border: 0;
-//   background: linear-gradient(
-//     270deg,
-//     #ffffff 0%,
-//     rgba(255, 255, 255, 0) 66.67%
-//   );
-//   width: 76px;
-//   height: 100%;
-//   position: absolute;
-//   top: 0;
-//   right: 0;
-//   bottom: 0;
-// `;
 export const ViewIcoin = styled(RightIcon)``;

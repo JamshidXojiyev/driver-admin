@@ -10,10 +10,10 @@ import ModeratorDialog from "./moderator-dialog";
 
 function Moderators(props) {
   const token = localStorage.getItem("token");
+
   const [moderators, setModerators] = useState([]);
   const [dialog, setDialog] = useState(false);
   const [dialogData, setDialogData] = useState();
-
   useEffect(() => {
     axios
       .post(
@@ -34,17 +34,17 @@ function Moderators(props) {
       <MyDiv bothSides>
         <MyDiv line margin="0 0 18px 0">
           <MenuName borderNone>Moderators list</MenuName>
-          <MyInput
+          {/* <MyInput
             search
             width="220px"
             placeholder="Search"
             // onChange={(e) => setSearch(e.target.value)}
-          />
+          /> */}
         </MyDiv>
         <MyButton
           width="200px"
           blue
-          text={"Create moderator"}
+          text={"+ Create moderator"}
           onClick={() => {
             setDialog(true);
             setDialogData();

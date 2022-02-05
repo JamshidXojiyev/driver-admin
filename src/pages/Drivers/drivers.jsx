@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
-import MyButton from "../../components/my-button/my-button";
 import { MenuName } from "../../global-styles/body-title";
 import { MyDiv } from "../../global-styles/my-div.s";
-import { ReactComponent as ViewIcon } from "../../assats/icons/view.svg";
 import axios from "axios";
 import MyInput from "../../components/my-input/my-input";
 import { useHistory } from "react-router";
@@ -11,6 +9,7 @@ import moment from "moment";
 import { DateStatus } from "./drivers.s";
 import MySelect from "../../components/my-select/my-select";
 import Loading from "../../components/loading/loading";
+import DriverInfo from "./driver-info";
 
 function Drivers(props) {
   const history = useHistory();
@@ -42,6 +41,7 @@ function Drivers(props) {
   });
   const [search, setSearch] = useState("");
   const [network_status, set_network_status] = useState(null);
+  const [driver_id, set_driver_id] = useState();
 
   useEffect(() => {
     setLoading(true);
@@ -52,7 +52,7 @@ function Drivers(props) {
           limit: parseInt(pageLimit),
           page: parseInt(page),
           search: search,
-          network_status: network_status,
+          network_status: network_status === "all" ? null : network_status,
         },
         {
           headers: {
@@ -87,17 +87,22 @@ function Drivers(props) {
             {moment(item.disconnected_time).fromNow()}
           </DateStatus>
         ),
+        id: item._id,
       };
       return testData;
     });
     setNewData({ ...newData, body: data });
   }, [dataBase]);
+
+  if (driver_id !== undefined) {
+    return <DriverInfo close={(e) => set_driver_id(e)} driver_id={driver_id} />;
+  }
   return (
     <>
       <Loading loading={loading} onWindow />
       <MyDiv bothSides margin="0 0 18px 0">
         <MyDiv line>
-          <MenuName borderNone>Car Classes list</MenuName>
+          <MenuName borderNone>Drivers list</MenuName>
           <MyInput
             search
             width="220px"
@@ -114,6 +119,9 @@ function Drivers(props) {
         />
       </MyDiv>
       <MyTable
+        itemValue={(e) => {
+          set_driver_id(e.id);
+        }}
         data={newData}
         total={total}
         set_page_limit={(e) => setPageLimit(e)}

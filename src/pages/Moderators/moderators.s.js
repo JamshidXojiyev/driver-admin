@@ -38,6 +38,8 @@ export const H1 = styled.h1`
   display: flex;
   align-items: center;
   justify-content: center;
+  user-select: text;
+  cursor: text;
   svg {
     margin-right: 12px;
   }
@@ -53,9 +55,8 @@ export const H2 = styled.h2`
   text-align: center;
 `;
 export const Container = styled.div`
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: auto auto auto;
   gap: 12px;
   margin: 12px 0 12px 0;
 `;

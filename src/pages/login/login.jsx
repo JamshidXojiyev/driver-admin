@@ -48,9 +48,10 @@ function LogIn(props) {
       axios
         .post(`${process.env.REACT_APP_BASE_URL}/moderator/login`, values)
         .then((res) => {
-          history.push("/dashbord");
+          history.push("/dashboard");
           alert.success("Password confirmed");
           localStorage.setItem("token", JSON.stringify(res.data.data.token));
+          localStorage.setItem("username", res.data.data.username);
         })
         .catch((err) => {
           alert.error("Incorrect password entered !");

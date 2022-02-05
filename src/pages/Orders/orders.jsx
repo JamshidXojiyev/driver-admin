@@ -32,11 +32,10 @@ function Orders(props) {
     { class: "Standard", price: "60 000 SUM" },
     { class: "Labo", price: "40 000 SUM" },
   ];
-  console.log(step);
 
   return (
     <>
-      <StepBlock>
+      {/* <StepBlock>
         <StepStyle activ={step === 1} />
         <StepStyle activ={step === 2} />
         <StepStyle activ={step === 3} />
@@ -127,7 +126,7 @@ function Orders(props) {
             <MyButton blue text="Finish" />
           </MyDiv>
         </MyDiv>
-      </MyDiv>
+      </MyDiv> */}
     </>
   );
 }

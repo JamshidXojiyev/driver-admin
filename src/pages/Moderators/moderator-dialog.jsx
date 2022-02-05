@@ -27,28 +27,47 @@ function ModeratorDialog(props) {
     "rides",
     "settings",
     "shift",
+    "news",
     "shift_history",
   ];
   const formik = useFormik({
-    initialValues: {
-      username: props.data ? props.data.username : "",
-      password: props.data ? props.data.password : "",
-      branches: props.data ? props.data.access_rights.branches : false,
-      car_classes: props.data ? props.data.access_rights.car_classes : false,
-      drivers: props.data ? props.data.access_rights.drivers : false,
-      live_map: props.data ? props.data.access_rights.live_map : false,
-      moderators: props.data ? props.data.access_rights.moderators : false,
-      orders: props.data ? props.data.access_rights.orders : false,
-      places: props.data ? props.data.access_rights.places : false,
-      reports: props.data ? props.data.access_rights.reports : false,
-      riders: props.data ? props.data.access_rights.riders : false,
-      rides: props.data ? props.data.access_rights.rides : false,
-      settings: props.data ? props.data.access_rights.settings : false,
-      shift: props.data ? props.data.access_rights.shift : false,
-      shift_history: props.data
-        ? props.data.access_rights.shift_history
-        : false,
-    },
+    initialValues: props.data
+      ? {
+          username: props.data.username,
+          password: props.data.password,
+          branches: props.data.access_rights.branches,
+          car_classes: props.data.access_rights.car_classes,
+          drivers: props.data.access_rights.drivers,
+          live_map: props.data.access_rights.live_map,
+          moderators: props.data.access_rights.moderators,
+          orders: props.data.access_rights.orders,
+          places: props.data.access_rights.places,
+          reports: props.data.access_rights.reports,
+          riders: props.data.access_rights.riders,
+          rides: props.data.access_rights.rides,
+          settings: props.data.access_rights.settings,
+          shift: props.data.access_rights.shift,
+          news: props.data.access_rights.news,
+          shift_history: props.data.access_rights.shift_history,
+        }
+      : {
+          username: "",
+          password: "",
+          branches: false,
+          car_classes: false,
+          drivers: false,
+          live_map: false,
+          moderators: false,
+          orders: false,
+          places: false,
+          reports: false,
+          riders: false,
+          rides: false,
+          settings: false,
+          shift: false,
+          news: false,
+          shift_history: false,
+        },
     validationSchema: Yup.object({
       username: Yup.string()
         .test(
@@ -64,12 +83,8 @@ function ModeratorDialog(props) {
         .min(5, "Minimum length is 5 characters")
         .required("Required"),
     }),
-    onSubmit: (values) => {
+    onSubmit: (val) => {
       if (props.data) {
-        const password_in = formik.values.password;
-        const username_in = formik.values.username;
-        delete formik.values.password;
-        delete formik.values.username;
         axios
           .post(
             `${process.env.REACT_APP_BASE_URL}/moderator/update`,
@@ -79,8 +94,8 @@ function ModeratorDialog(props) {
               id: props.data.id,
               is_super_admin: props.data.is_super_admin,
               _id: props.data._id,
-              password: password_in,
-              username: username_in,
+              password: formik.values.password,
+              username: formik.values.username,
             },
             {
               headers: {
@@ -91,18 +106,15 @@ function ModeratorDialog(props) {
           .then(() => {
             alert.success("Moderator update.");
             props.close(false);
-          });
+          })
+          .catch((err) => alert.success(err.message));
       } else {
-        const password_in = formik.values.password;
-        const username_in = formik.values.username;
-        delete formik.values.password;
-        delete formik.values.username;
         axios
           .post(
             `${process.env.REACT_APP_BASE_URL}/moderator/create`,
             {
-              password: password_in,
-              username: username_in,
+              password: formik.values.password,
+              username: formik.values.username,
               access_rights: formik.values,
             },
             {
@@ -114,7 +126,8 @@ function ModeratorDialog(props) {
           .then((res) => {
             alert.success("Moderator created.");
             props.close(false);
-          });
+          })
+          .catch((err) => alert.success(err.message));
       }
     },
   });
@@ -126,10 +139,10 @@ function ModeratorDialog(props) {
         },
       })
       .then((res) => {
-        console.log(res);
         alert.success("Delete moderator.");
         props.close(false);
-      });
+      })
+      .catch((err) => alert.error(err.message));
   };
   return (
     <MyForm onSubmit={formik.handleSubmit}>
@@ -185,7 +198,7 @@ function ModeratorDialog(props) {
         ) : (
           <MyDiv />
         )}
-        <MyButton text="Log In" blue type="submit" />
+        <MyButton text="Save" blue type="submit" />
       </MyDiv>
     </MyForm>
   );

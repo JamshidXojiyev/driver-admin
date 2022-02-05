@@ -6,7 +6,7 @@ export const Sidebar = styled.div`
   left: 8px;
   width: ${({ menu }) => (menu ? "200px" : "57px")};
   height: calc(100vh - 40px);
-  padding-top: ${({ menu }) => (menu ? "9px" : "")};
+  /* padding-top: ${({ menu }) => (menu ? "9px" : "")}; */
   transition: all 0.1s ease-in-out;
 `;
 export const User = styled.div`
@@ -46,11 +46,10 @@ export const UserPhone = styled.h2`
   opacity: 0.6;
 `;
 export const MenuList = styled.ul`
-  margin-top: 18px;
+  margin-top: 12px;
 `;
 export const MenuItem = styled.li`
-  height: 41px;
-  overflow: hidden;
+  height: 38px;
   ${({ activ }) =>
     activ &&
     css`
@@ -60,10 +59,9 @@ export const MenuItem = styled.li`
   border-radius: 30px 0px 0px 30px;
   display: flex;
   flex-direction: row;
-  flex-wrap: nowrap;
-  align-content: center;
-  align-items: flex-end;
-  padding: 12px;
+  align-items: center;
+  padding-left: 12px;
+  padding-right: 12px;
   margin-bottom: 4px;
   && svg {
     min-width: 24px;
@@ -94,6 +92,7 @@ export const MenuName = styled.h3`
   line-height: 17px;
   color: #ffffff;
   margin-left: 20px;
+  display: ${({ menu }) => (!menu ? "none" : "inline-block")};
 `;
 export const Body = styled.div`
   margin: ${({ menu }) => (menu ? "0 0 0 200px" : "0 0 0 57px")};

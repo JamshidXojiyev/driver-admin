@@ -36,6 +36,7 @@ function ClientsMessage(props) {
   return (
     <MyForm onSubmit={formik.handleSubmit}>
       <MyTextarea
+        width="450px"
         lite
         label="Message"
         placeholder="Enter your message"
