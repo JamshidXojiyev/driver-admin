@@ -53,7 +53,6 @@ function Clients(props) {
   const [search, setSearch] = useState("");
   const [phone, setPhone] = useState("");
   const [rider_id, set_rider_id] = useState();
-  console.log("I`ts mee");
   // car class delete
   const Clients_Delete = (e) => {
     axios
