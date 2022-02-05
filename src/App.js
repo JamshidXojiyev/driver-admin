@@ -6,8 +6,6 @@ import { AlertStyle } from "./global-styles/alert-style.s";
 import { ReactComponent as ErrorAlertIcon } from "./assats/icons/error-alert.svg";
 import { ReactComponent as SuccessAlertIcon } from "./assats/icons/success-alert.svg";
 import { ReactComponent as InfoAlertIcon } from "./assats/icons/info-alert.svg";
-import { useEffect } from "react";
-import Loading from "./components/loading/loading";
 
 const AlertTemplate = ({ options, message, close }) => (
   <AlertStyle type={options.type} style={{ padding: "12px 16px" }}>
@@ -19,11 +17,15 @@ const AlertTemplate = ({ options, message, close }) => (
 );
 
 function App() {
+  const history = useHistory();
+  !localStorage.getItem("token") ? history.push("/login") : history.push("/");
+
   const options = {
     position: positions.BOTTOM_RIGHT,
     timeout: 4000,
     offset: "4px",
   };
+
   return (
     <AlertProvider template={AlertTemplate} {...options}>
       <Switch>

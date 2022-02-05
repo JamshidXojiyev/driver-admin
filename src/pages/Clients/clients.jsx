@@ -53,7 +53,7 @@ function Clients(props) {
   const [search, setSearch] = useState("");
   const [phone, setPhone] = useState("");
   const [rider_id, set_rider_id] = useState();
-
+  console.log("I`ts mee");
   // car class delete
   const Clients_Delete = (e) => {
     axios
@@ -99,7 +99,7 @@ function Clients(props) {
     const data = dataBase.map((item) => {
       const testData = {
         view: (
-          <MyDiv  lineCenter>
+          <MyDiv lineCenter>
             <MyButton
               onClickCapture={(e) => {
                 setPhone(item.phone_number);

@@ -53,6 +53,7 @@ function MainView(props) {
   const [menuType, setMenuType] = useState(true);
   const [access_rights, set_access_rights] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [mainPage, setMainPage] = useState("");
 
   useEffect(() => {
     setLoading(true);
@@ -143,24 +144,18 @@ function MainView(props) {
           </NavBtnStyle>
         </NavigatorStyle>
         <Switch>
-          <Route
-            exact
-            path="/"
-            render={() => <Redirect to={user ? "/dashboard" : "/login"} />}
-          />
-          <Route exact path="/dashboard" component={Dashboard} />
-          <Route exact path="/orders" component={Orders} />
-          <Route exact path="/rides" component={Rides} />
-          <Route exact path="/clients" component={Clients} />
-          <Route exact path="/drivers" component={Drivers} />
-          <Route exact path="/shift" component={Shift} />
-          <Route exact path="/car-classes" component={CarClasses} />
-          {/* <Route exact path="/polygon" component={Polygon} /> */}
-          <Route exact path="/moderators" component={Moderators} />
-          <Route exact path="/news" component={News} />
-
-          <Route exact path="/shift/history" component={ShiftHistory} />
-          <Route exact path="/shift/pays" component={ShiftsPays} />
+          {MenuData.map(
+            (item, index) =>
+              access_rights[item.id] && (
+                <Route key={index} exact path={item.url}>
+                  {mainPage ? "" : setMainPage(item.url)}
+                  <item.component />
+                </Route>
+              )
+          )}
+          <Route path="*">
+            <Redirect to={user ? mainPage : "/login"} />
+          </Route>
         </Switch>
       </Body>
     </MyDiv>
