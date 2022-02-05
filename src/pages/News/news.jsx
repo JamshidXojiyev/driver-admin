@@ -9,6 +9,7 @@ import { MyDiv } from "../../global-styles/my-div.s";
 import CreateNews from "./create-news";
 import { ReactComponent as EditSVG } from "../../assats/icons/edit.svg";
 import { ReactComponent as DeleteSVG } from "../../assats/icons/delete.svg";
+import Loading from "../../components/loading/loading";
 
 function News(props) {
   const alert = useAlert();
@@ -119,6 +120,7 @@ function News(props) {
   }
   return (
     <>
+      <Loading loading={loading} onWindow />
       <MyDiv bothSides margin="0 0 18px 0">
         <MenuName borderNone>News report</MenuName>
         <MyButton

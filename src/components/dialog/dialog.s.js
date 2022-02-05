@@ -18,7 +18,7 @@ export const DialogBg = styled.div`
   }
 `;
 export const DialogCon = styled.div`
-  position: relative;
+  position: fixed;
   height: 100vh;
   width: 100%;
   display: flex;

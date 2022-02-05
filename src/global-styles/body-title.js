@@ -18,6 +18,9 @@ export const MenuSpan = styled.span`
   font-weight: 600;
   font-size: 13px;
   color: #505470;
+  :first-child {
+    font-size: 28px;
+  }
 `;
 
 export const ActivUser = styled.h2`

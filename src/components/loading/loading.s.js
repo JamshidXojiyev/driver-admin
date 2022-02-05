@@ -9,7 +9,7 @@ const onWindowStyle = css`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: rgba(16, 16, 16, 0.2);
+  background-color: rgba(16, 16, 16, 0.7);
 `;
 const inWindowStyle = css`
   display: flex;

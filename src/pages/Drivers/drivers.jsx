@@ -8,13 +8,12 @@ import MyTable from "../../components/my-table/my-table";
 import moment from "moment";
 import { DateStatus } from "./drivers.s";
 import MySelect from "../../components/my-select/my-select";
-import Loading from "../../components/loading/loading";
 import DriverInfo from "./driver-info";
+import MyButton from "../../components/my-button/my-button";
 
 function Drivers(props) {
   const history = useHistory();
   const token = localStorage.getItem("token");
-  const [loading, setLoading] = useState(true);
 
   const [dataBase, setDataBase] = useState([]);
   const [total, setTotal] = useState(1);
@@ -43,8 +42,19 @@ function Drivers(props) {
   const [network_status, set_network_status] = useState(null);
   const [driver_id, set_driver_id] = useState();
 
+  const [renderState, setRenderState] = useState(0);
+  const [renderType, setRenderType] = useState(false);
   useEffect(() => {
-    setLoading(true);
+    if(renderType){
+      const check = setInterval(() => {
+        setRenderState(renderState + 1);
+      }, 1000);
+    
+    return () => clearInterval(check);
+    }
+  }, [renderType]);
+
+  useEffect(() => {
     axios
       .post(
         `${process.env.REACT_APP_BASE_URL}/drivers/get`,
@@ -63,16 +73,14 @@ function Drivers(props) {
       .then((res) => {
         setDataBase(res.data.data.data);
         setTotal(res.data.data.total);
-        setLoading(false);
       })
       .catch((err) => {
         if (err.response.data.code == 401) {
           localStorage.removeItem("token");
           history.push("/login");
         }
-        setLoading(false);
       });
-  }, [pageLimit, page, search, network_status]);
+  }, [pageLimit, page, search, network_status, renderState]);
 
   useEffect(() => {
     const data = dataBase.map((item) => {
@@ -99,7 +107,6 @@ function Drivers(props) {
   }
   return (
     <>
-      <Loading loading={loading} onWindow />
       <MyDiv bothSides margin="0 0 18px 0">
         <MyDiv line>
           <MenuName borderNone>Drivers list</MenuName>
@@ -110,13 +117,24 @@ function Drivers(props) {
             onChange={(e) => setSearch(e.target.value)}
           />
         </MyDiv>
-        <MySelect
-          recktangleBorder
-          width="180px"
-          value={network_status}
-          options={["all", "online", "offline"]}
-          onChange={(e) => set_network_status(e.target.value)}
-        />
+        <MyDiv lineRight gap="8px">
+          <MySelect
+            recktangleBorder
+            width="180px"
+            value={network_status}
+            options={["all", "online", "offline"]}
+            onChange={(e) => set_network_status(e.target.value)}
+          />
+          {/* <MyButton
+            width="160px"
+            blue={renderType}
+            red={!renderType}
+            text={"Update Time"}
+            onClick={() => {
+              setRenderType(!renderType);
+            }}
+          /> */}
+        </MyDiv>
       </MyDiv>
       <MyTable
         itemValue={(e) => {

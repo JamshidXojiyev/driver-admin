@@ -200,12 +200,12 @@ function ShiftsPays(props) {
             <MyButton
               onClick={() => set_pay_type("pay-in")}
               blue
-              text="pay-in"
+              text="Pay In"
             />
             <MyButton
               onClick={() => set_pay_type("pay-out")}
               red
-              text="pay-out"
+              text="Pay Out"
             />
           </MyDiv>
         </MyDiv>
