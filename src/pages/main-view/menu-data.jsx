@@ -9,7 +9,7 @@ import { ReactComponent as CarClassesIcon } from "../../assats/menu-icons/CarCla
 import { ReactComponent as BranchesIcon } from "../../assats/menu-icons/Branches.svg";
 import { ReactComponent as ModeratorsIcon } from "../../assats/menu-icons/Moderators.svg";
 import { ReactComponent as NewsIcon } from "../../assats/menu-icons/News.svg";
-import { ReactComponent as PolygonIcon } from "../../assats/menu-icons/Polygon.svg";
+import { ReactComponent as PlacesIcon } from "../../assats/menu-icons/Places.svg";
 import Dashboard from "../Dashboard/dashboard";
 import Clients from "../Clients/clients";
 import Drivers from "../Drivers/drivers";
@@ -81,9 +81,9 @@ export const MenuData = [
     component: CarClasses,
   },
   {
-    icon: <PolygonIcon />,
-    name: "Polygon",
-    url: "/polygon",
+    icon: <PlacesIcon />,
+    name: "Places",
+    url: "/places",
     id: "places",
     component: MyPolygon,
   },
