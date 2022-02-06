@@ -10,6 +10,7 @@ const onWindowStyle = css`
   align-items: center;
   justify-content: center;
   background-color: rgba(16, 16, 16, 0.7);
+  z-index: 999;
 `;
 const inWindowStyle = css`
   display: flex;

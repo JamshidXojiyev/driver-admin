@@ -19,6 +19,9 @@ import Shift from "../Shift/shift";
 import CarClasses from "../Car-Classes/car-classes";
 import Moderators from "../Moderators/moderators";
 import News from "../News/news";
+import LiveMap from "../Live-Map/live-map";
+import MyPolygon from "../Polygon/my-polygon";
+import Branches from "../Branches/branches";
 
 export const MenuData = [
   {
@@ -68,7 +71,7 @@ export const MenuData = [
     name: "LiveMap",
     url: "/live-map",
     id: "live_map",
-    component: "",
+    component: LiveMap,
   },
   {
     icon: <CarClassesIcon />,
@@ -82,14 +85,14 @@ export const MenuData = [
     name: "Polygon",
     url: "/polygon",
     id: "places",
-    component: "",
+    component: MyPolygon,
   },
   {
     icon: <BranchesIcon />,
     name: "Branches",
     url: "/branches",
     id: "branches",
-    component: "",
+    component: Branches,
   },
   {
     icon: <ModeratorsIcon />,

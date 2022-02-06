@@ -15,20 +15,19 @@ function ModeratorDialog(props) {
   const alert = useAlert();
 
   const checkboxes = [
-    "branches",
-    "car_classes",
-    "drivers",
-    "live_map",
-    "moderators",
-    "orders",
-    "places",
     "reports",
-    "riders",
+    "orders",
     "rides",
-    "settings",
+    "riders",
+    "drivers",
     "shift",
-    "news",
     "shift_history",
+    "live_map",
+    "car_classes",
+    "places",
+    "branches",
+    "moderators",
+    "news",
   ];
   const formik = useFormik({
     initialValues: props.data

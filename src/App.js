@@ -6,7 +6,7 @@ import { AlertStyle } from "./global-styles/alert-style.s";
 import { ReactComponent as ErrorAlertIcon } from "./assats/icons/error-alert.svg";
 import { ReactComponent as SuccessAlertIcon } from "./assats/icons/success-alert.svg";
 import { ReactComponent as InfoAlertIcon } from "./assats/icons/info-alert.svg";
-
+ 
 const AlertTemplate = ({ options, message, close }) => (
   <AlertStyle type={options.type} style={{ padding: "12px 16px" }}>
     {options.type === "info" && <InfoAlertIcon />}

@@ -34,12 +34,6 @@ function Moderators(props) {
       <MyDiv bothSides>
         <MyDiv line margin="0 0 18px 0">
           <MenuName borderNone>Moderators list</MenuName>
-          {/* <MyInput
-            search
-            width="220px"
-            placeholder="Search"
-            // onChange={(e) => setSearch(e.target.value)}
-          /> */}
         </MyDiv>
         <MyButton
           width="200px"

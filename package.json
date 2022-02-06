@@ -21,7 +21,7 @@
     "react-leaflet": "^3.2.2",
     "react-leaflet-fullscreen": "^2.0.2",
     "react-leaflet-google-v2": "^5.2.0",
-    "react-redux": "^7.2.6",
+    "react-owl-carousel": "^2.3.3",
     "react-router-dom": "5",
     "react-scripts": "5.0.0",
     "react-select-search": "^3.0.9",

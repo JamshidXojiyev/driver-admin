@@ -3,7 +3,6 @@ import { MyDiv } from "../../global-styles/my-div.s";
 import {
   Body,
   H1,
-  H2,
   ImageBorder,
   MenuItem,
   MenuItemAddon,
@@ -12,7 +11,6 @@ import {
   NavBtnStyle,
   NavigatorStyle,
   Sidebar,
-  SPAN,
   User,
   UserImage,
   UserName,
@@ -22,26 +20,15 @@ import {
 import UserIMG from "../../assats/images/User.png";
 import { MenuData } from "./menu-data";
 import { Link, Redirect, Route, Switch, useHistory } from "react-router-dom";
-import Dashboard from "../Dashboard/dashboard";
 import { useLocation } from "react-router-dom";
 import { ReactComponent as MenuIconSVG } from "../../assats/icons/menu.svg";
 import { ReactComponent as HiSVG } from "../../assats/icons/hi.svg";
-import { ReactComponent as NewsSVG } from "../../assats/icons/news.svg";
-import { ReactComponent as ModeSVG } from "../../assats/icons/mode.svg";
 import MyButton from "../../components/my-button/my-button";
-import Clients from "../Clients/clients";
-import Orders from "../Orders/orders";
-import Rides from "../Rides/rides";
-import Moderators from "../Moderators/moderators";
-import CarClasses from "../Car-Classes/car-classes";
-import Drivers from "../Drivers/drivers";
-import Shift from "../Shift/shift";
 import ShiftHistory from "../Shift/shift-history";
 import ShiftsPays from "../Shift/shifts-pays";
 import Loading from "../../components/loading/loading";
 import client from "../../client";
 import { ReactComponent as ExitIcon } from "../../assats/icons/exit.svg";
-import News from "../News/news";
 
 function MainView(props) {
   const location = useLocation();
@@ -76,89 +63,93 @@ function MainView(props) {
     return <Loading loading={loading} onWindow />;
   }
   return (
-    <MyDiv height="100%" line padding="20px 16px 20px 8px">
-      <Sidebar menu={menuType}>
-        <User>
-          <ImageBorder>
-            <UserImage src={UserIMG} />
-          </ImageBorder>
-          <Name>
-            <UserName>Samantha</UserName>
-            <UserPhone>+998 (99) 436-46-15</UserPhone>
-          </Name>
-        </User>
-        <MenuList>
-          {MenuData.map((item, index) => (
-            <>
-              {access_rights[item.id] && (
-                <Link to={item.url}>
-                  <MenuItem
-                    menu={menuType}
-                    activ={
-                      location.pathname.search(item.url) < 0 ? false : true
-                    }
-                    key={index}
-                  >
-                    {location.pathname === item.url && (
-                      <MenuItemAddon className="top" />
-                    )}
-                    {item.icon}
-                    <MenuName menu={menuType}>{item.name}</MenuName>
-                    {location.pathname === item.url && (
-                      <MenuItemAddon className="bottom" />
-                    )}
-                  </MenuItem>
-                </Link>
-              )}
-            </>
-          ))}
-        </MenuList>
-      </Sidebar>
+    <>
+      <MyDiv height="100%" line padding="20px 16px 20px 8px">
+        <Sidebar menu={menuType}>
+          <User>
+            <ImageBorder>
+              <UserImage src={UserIMG} />
+            </ImageBorder>
+            <Name>
+              <UserName>Samantha</UserName>
+              <UserPhone>+998 (99) 436-46-15</UserPhone>
+            </Name>
+          </User>
+          <MenuList>
+            {MenuData.map((item, index) => (
+              <>
+                {access_rights[item.id] && (
+                  <Link to={item.url}>
+                    <MenuItem
+                      menu={menuType}
+                      activ={
+                        location.pathname.search(item.url) < 0 ? false : true
+                      }
+                      key={index}
+                    >
+                      {location.pathname === item.url && (
+                        <MenuItemAddon className="top" />
+                      )}
+                      {item.icon}
+                      <MenuName menu={menuType}>{item.name}</MenuName>
+                      {location.pathname === item.url && (
+                        <MenuItemAddon className="bottom" />
+                      )}
+                    </MenuItem>
+                  </Link>
+                )}
+              </>
+            ))}
+          </MenuList>
+        </Sidebar>
 
-      <Body menu={menuType}>
-        <NavigatorStyle>
-          <MyDiv line>
-            <MyButton
-              onClick={() => setMenuType(!menuType)}
-              text={<MenuIconSVG />}
-              icon
-            />
-            <H1>{username} welcome to the taxi</H1>
-            <HiSVG />
-            {/* <H2>
+        <Body menu={menuType}>
+          <NavigatorStyle>
+            <MyDiv line>
+              <MyButton
+                onClick={() => setMenuType(!menuType)}
+                text={<MenuIconSVG />}
+                icon
+              />
+              <H1>{username} welcome to the taxi</H1>
+              <HiSVG />
+              {/* <H2>
               you have <SPAN>1 new message</SPAN>
             </H2> */}
-          </MyDiv>
-          <NavBtnStyle>
-            {/* <MyButton text={<ModeSVG />} icon /> */}
-            {/* <MyButton text={<NewsSVG />} icon /> */}
-            <MyButton
-              onClick={() => {
-                localStorage.removeItem("token");
-                localStorage.removeItem("username");
-                history.push("/login");
-              }}
-              text={<ExitIcon />}
-              icon
-            />
-          </NavBtnStyle>
-        </NavigatorStyle>
-        <Switch>
-          {MenuData.map(
-            (item, index) =>
-              access_rights[item.id] && (
-                <Route key={index} exact path={item.url}>
-                  {mainPage ? "" : setMainPage(item.url)}
-                  <item.component />
-                </Route>
-              )
-          )}
-          <Route path="*">
-            <Redirect to={user ? mainPage : "/login"} />
-          </Route>
-        </Switch>
-      </Body>
-    </MyDiv>
+            </MyDiv>
+            <NavBtnStyle>
+              {/* <MyButton text={<ModeSVG />} icon /> */}
+              {/* <MyButton text={<NewsSVG />} icon /> */}
+              <MyButton
+                onClick={() => {
+                  localStorage.removeItem("token");
+                  localStorage.removeItem("username");
+                  history.push("/login");
+                }}
+                text={<ExitIcon />}
+                icon
+              />
+            </NavBtnStyle>
+          </NavigatorStyle>
+          <Switch>
+            <Route exact path="/shift/history" component={ShiftHistory} />
+            <Route exact path="/shift/pays" component={ShiftsPays} />
+            {MenuData.map(
+              (item, index) =>
+                access_rights[item.id] && (
+                  <Route key={index} exact path={item.url}>
+                    {mainPage ? "" : setMainPage(item.url)}
+                    <item.component />
+                  </Route>
+                )
+            )}
+            <Route path="*">
+              <Redirect to={user ? mainPage : "/login"} />
+            </Route>
+          </Switch>
+        </Body>
+      </MyDiv>
+    </>
   );
 }
 
