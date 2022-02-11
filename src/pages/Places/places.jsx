@@ -9,10 +9,10 @@ import axios from "axios";
 import { useHistory } from "react-router-dom";
 import MyTable from "../../components/my-table/my-table";
 import Loading from "../../components/loading/loading";
-import BranchesDialog from "./branches-dialog";
+import PlacesDialog from "./places-dialog";
 import { useAlert } from "react-alert";
 
-function Branches(props) {
+function Places(props) {
   const history = useHistory();
   const token = localStorage.getItem("token");
   const alert = useAlert();
@@ -22,20 +22,20 @@ function Branches(props) {
   const [pageLimit, setPageLimit] = useState(10);
   const [page, setPage] = useState(1);
   const [newData, setNewData] = useState({
-    header: ["Name", ""],
+    header: ["Location name", "Type", ""],
     body: [],
-    order: ["name", "btn"],
+    order: ["location_name", "type", "btn"],
   });
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(true);
-  const [dialog, setDialog] = useState({ id: null, type: false });
+  const [dialog, setDialog] = useState({ value: null, type: false });
   const [renderTable, setRenderTable] = useState(1);
 
   useEffect(() => {
     setLoading(true);
     axios
       .post(
-        `${process.env.REACT_APP_BASE_URL}/branches/get-pagin`,
+        `${process.env.REACT_APP_BASE_URL}/places/search-pagin`,
         { limit: parseInt(pageLimit), page: parseInt(page), search: search },
         {
           headers: {
@@ -60,36 +60,38 @@ function Branches(props) {
   useEffect(() => {
     const data = dataBase.map((item) => {
       const testData = {
-        name: item.name,
+        location_name: item.location_name,
+        type: item.type,
         btn: (
           <MyDiv lineRight gap="8px">
             <MyButton
               onClick={() => {
-                setDialog({ ...dialog, id: item._id, type: true });
+                setDialog({ ...dialog, value: item, type: true });
               }}
               icon
               text={<EditSVG />}
             />
             <MyButton
               onClick={() => {
-                Branche_Delete(item._id);
+                Places_Delete(item._id);
               }}
               icon
               text={<DeleteSVG />}
             />
           </MyDiv>
         ),
+        id: item._id,
       };
       return testData;
     });
     setNewData({ ...newData, body: data });
   }, [dataBase]);
 
-  // branche delete
-  const Branche_Delete = (e) => {
+  // places delete
+  const Places_Delete = (e) => {
     axios
       .post(
-        `${process.env.REACT_APP_BASE_URL}/branch/delete`,
+        `${process.env.REACT_APP_BASE_URL}/place/delete`,
         { _id: e },
         {
           headers: {
@@ -98,7 +100,7 @@ function Branches(props) {
         }
       )
       .then((res) => {
-        alert.success("Branche deleted.");
+        alert.success("Places deleted.");
         setRenderTable(renderTable + 1);
       })
       .catch((err) => alert(err.message));
@@ -106,8 +108,8 @@ function Branches(props) {
 
   if (dialog.type) {
     return (
-      <BranchesDialog
-        id={dialog.id}
+      <PlacesDialog
+        value={dialog.value}
         close={(e) => {
           setDialog({ ...dialog, type: e });
           setRenderTable(renderTable + 1);
@@ -120,7 +122,7 @@ function Branches(props) {
       <Loading loading={loading} onWindow />
       <MyDiv bothSides margin="0 0 18px 0">
         <MyDiv line>
-          <MenuName borderNone>Branches list</MenuName>
+          <MenuName borderNone>Places list</MenuName>
           <MyInput
             search
             width="220px"
@@ -134,7 +136,7 @@ function Branches(props) {
           blue
           text={"+ Create place"}
           onClick={() => {
-            setDialog({ ...dialog, id: null, type: true });
+            setDialog({ ...dialog, value: null, type: true });
           }}
         />
       </MyDiv>
@@ -148,4 +150,4 @@ function Branches(props) {
   );
 }
 
-export default Branches;
+export default Places;

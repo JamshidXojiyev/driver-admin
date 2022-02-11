@@ -20,8 +20,8 @@ import CarClasses from "../Car-Classes/car-classes";
 import Moderators from "../Moderators/moderators";
 import News from "../News/news";
 import LiveMap from "../Live-Map/live-map";
-import MyPolygon from "../Polygon/my-polygon";
 import Branches from "../Branches/branches";
+import Places from "../Places/places";
 
 export const MenuData = [
   {
@@ -85,7 +85,7 @@ export const MenuData = [
     name: "Places",
     url: "/places",
     id: "places",
-    component: MyPolygon,
+    component: Places,
   },
   {
     icon: <BranchesIcon />,

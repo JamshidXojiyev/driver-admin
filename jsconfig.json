@@ -1,0 +1,7 @@
+{
+    "compiletOptions": {
+        "baseUrl": "."
+    },
+    "include": ["./src/**"],
+    "exclude": ["node_modules"]
+}

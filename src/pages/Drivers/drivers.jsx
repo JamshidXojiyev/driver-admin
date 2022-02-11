@@ -42,17 +42,17 @@ function Drivers(props) {
   const [network_status, set_network_status] = useState(null);
   const [driver_id, set_driver_id] = useState();
 
-  const [renderState, setRenderState] = useState(0);
-  const [renderType, setRenderType] = useState(false);
-  useEffect(() => {
-    if(renderType){
-      const check = setInterval(() => {
-        setRenderState(renderState + 1);
-      }, 1000);
+  // const [renderState, setRenderState] = useState(0);
+  // const [renderType, setRenderType] = useState(false);
+  // useEffect(() => {
+  //   if(renderType){
+  //     const check = setInterval(() => {
+  //       setRenderState(renderState + 1);
+  //     }, 1000);
     
-    return () => clearInterval(check);
-    }
-  }, [renderType]);
+  //   return () => clearInterval(check);
+  //   }
+  // }, [renderType]);
 
   useEffect(() => {
     axios
@@ -80,7 +80,7 @@ function Drivers(props) {
           history.push("/login");
         }
       });
-  }, [pageLimit, page, search, network_status, renderState]);
+  }, [pageLimit, page, search, network_status/* , renderState */]);
 
   useEffect(() => {
     const data = dataBase.map((item) => {

@@ -47,7 +47,7 @@ function MyInput(props) {
           )}
         </InputBlockStyle>
       )}
-      <ErrorMessage>{props.errorMessage}</ErrorMessage>
+      {props.errorMessage && <ErrorMessage>{props.errorMessage}</ErrorMessage>}
     </MyDiv>
   );
 }

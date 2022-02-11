@@ -72,13 +72,12 @@ export const ListBlock = styled.ul`
 export const ListLI = styled.li`
   && {
     white-space: nowrap;
-    background: ${({ color }) => `${color}80`};
     border-radius: 50px;
     padding: 4px 24px 4px 4px;
     & > div {
-      background: ${({ color }) => `${color}`};
-      svg {
-        fill: #fff;
+      border: 1px solid ${({ color }) => color};
+      path {
+        fill: ${({ color }) => color};
         transform: translateY(4px);
       }
     }

@@ -139,6 +139,7 @@ function Clients(props) {
     });
     setNewData({ ...newData, body: data });
   }, [dataBase]);
+
   if (rider_id) {
     return (
       <>
@@ -146,12 +147,12 @@ function Clients(props) {
           <MenuName borderNone onClick={() => set_rider_id(undefined)}>
             <span>&#8249;</span> Clients list
           </MenuName>
-          {/* <MyInput
+          <MyInput
             search
             width="220px"
             placeholder="Search"
             // onChange={(e) => setSearch(e.target.value)}
-          /> */}
+          />
         </MyDiv>
         <RidersGet rider_id={rider_id && rider_id} />
       </>
