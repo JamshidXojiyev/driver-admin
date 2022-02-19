@@ -10,6 +10,7 @@ import { DateStatus } from "./drivers.s";
 import MySelect from "../../components/my-select/my-select";
 import DriverInfo from "./driver-info";
 import MyButton from "../../components/my-button/my-button";
+import { useRealtimeData } from "../../useRealTime";
 
 function Drivers(props) {
   const history = useHistory();
@@ -42,19 +43,7 @@ function Drivers(props) {
   const [network_status, set_network_status] = useState(null);
   const [driver_id, set_driver_id] = useState();
 
-  // const [renderState, setRenderState] = useState(0);
-  // const [renderType, setRenderType] = useState(false);
-  // useEffect(() => {
-  //   if(renderType){
-  //     const check = setInterval(() => {
-  //       setRenderState(renderState + 1);
-  //     }, 1000);
-    
-  //   return () => clearInterval(check);
-  //   }
-  // }, [renderType]);
-
-  useEffect(() => {
+  const drivers_get = () => {
     axios
       .post(
         `${process.env.REACT_APP_BASE_URL}/drivers/get`,
@@ -80,7 +69,10 @@ function Drivers(props) {
           history.push("/login");
         }
       });
-  }, [pageLimit, page, search, network_status/* , renderState */]);
+  };
+  useEffect(() => {
+    drivers_get();
+  }, [pageLimit, page, search, network_status]);
 
   useEffect(() => {
     const data = dataBase.map((item) => {
@@ -101,10 +93,14 @@ function Drivers(props) {
     });
     setNewData({ ...newData, body: data });
   }, [dataBase]);
+  // const data = useRealtimeData("https://jsonplaceholder.typicode.com/users",1000);
+  // console.log(data)
+  const [liveType, setLiveType] = useState(false);
 
   if (driver_id !== undefined) {
     return <DriverInfo close={(e) => set_driver_id(e)} driver_id={driver_id} />;
   }
+
   return (
     <>
       <MyDiv bothSides margin="0 0 18px 0">
@@ -125,15 +121,13 @@ function Drivers(props) {
             options={["all", "online", "offline"]}
             onChange={(e) => set_network_status(e.target.value)}
           />
-          {/* <MyButton
+          <MyButton
             width="160px"
-            blue={renderType}
-            red={!renderType}
+            // blue={renderType}
+            icon
             text={"Update Time"}
-            onClick={() => {
-              setRenderType(!renderType);
-            }}
-          /> */}
+            onClick={() => {}}
+          />
         </MyDiv>
       </MyDiv>
       <MyTable

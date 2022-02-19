@@ -16,7 +16,6 @@ import axios from "axios";
 function PlacesDialog(props) {
   const token = localStorage.getItem("token");
   const alert = useAlert();
-  console.log(props);
   const formik = useFormik({
     initialValues: {
       location_name: props.value ? props.value.location_name : "",
@@ -62,7 +61,6 @@ function PlacesDialog(props) {
         });
     },
   });
-  console.log(formik.values);
 
   return (
     <MyForm onSubmit={formik.handleSubmit}>
@@ -106,6 +104,7 @@ function PlacesDialog(props) {
       <MyDiv relative>
         {formik.values.type === "Point" && <CloseDrawArea />}
         <MyMap
+          scrollWheelZoom={true}
           type={formik.values.type}
           marker={
             formik.values.location?.latitude
@@ -113,7 +112,7 @@ function PlacesDialog(props) {
                   lat: formik.values?.location?.latitude,
                   lng: formik.values?.location?.longitude,
                 }
-              : [0,0]
+              : [0, 0]
           }
           latlng={(e) => {
             formik.setFieldValue(

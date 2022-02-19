@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   LogInContainer,
   LeftContent,
@@ -18,10 +18,20 @@ import { useHistory } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import Loading from "../../components/loading/loading";
+import LanguageContext from "../../locale/locale";
 
 function LogIn(props) {
   const history = useHistory();
   const alert = useAlert();
+  const {
+    state: {
+      lang,
+      value: {
+        inputs: { name },
+      },
+    },
+    dispatch,
+  } = useContext(LanguageContext);
 
   const [loading, setLoading] = useState(false);
 
@@ -66,6 +76,16 @@ function LogIn(props) {
   return (
     <>
       <LogInBg>
+        {/* <h1
+          onClick={() =>
+            dispatch({
+              type: "changeLang",
+              payload: lang === "en" ? "ru" : "en",
+            })
+          }
+        >
+          {name}
+        </h1> */}
         <LogInContainer>
           <LeftContent />
           <RightContent onSubmit={formik.handleSubmit}>

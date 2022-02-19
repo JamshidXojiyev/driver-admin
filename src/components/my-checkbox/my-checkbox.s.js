@@ -3,13 +3,10 @@ import styled from "styled-components";
 export const CheckboxStyle = styled.input`
   && {
     margin-right: 12px;
-    accent-color: #b8bcca00 !important;
-    outline: 2px solid #b8bcca;
-    outline-offset: -2px;
-    border-radius: 2px;
     width: 18px !important;
-    height: 18px !important;
-  }
+    height: 18px !important; */
+  
+    }
 `;
 export const CheckLabel = styled.label`
   font-family: "Inter", sans-serif;

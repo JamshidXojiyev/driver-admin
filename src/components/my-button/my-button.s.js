@@ -96,6 +96,7 @@ export const ButtonStyled = styled.button`
   font-size: 13px;
   line-height: 16px;
   cursor: pointer;
+  opacity: ${({ disabled }) => (disabled ? "0.3" : "1")};
   ${({ base, dark, blue, red, icon, pagination }) =>
     base
       ? baseStyle

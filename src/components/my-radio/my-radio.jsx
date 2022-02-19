@@ -4,7 +4,7 @@ import { RadioLabel, RadioStyle } from "./my-radio.s";
 
 function MyRadio(props) {
   return (
-    <MyDiv line>
+    <MyDiv lineCenter height="100%">
       <RadioStyle
         {...props}
         type="radio"

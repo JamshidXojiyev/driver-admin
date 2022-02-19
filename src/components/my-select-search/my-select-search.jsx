@@ -11,7 +11,7 @@ function MySelectSearch(props) {
         <LabelStyle error={props.error}>{props.label}</LabelStyle>
       )}
       <SelectSearchStyle filterOptions={fuzzySearch} {...props} />
-      <ErrorMessage>{props.errorMessage}</ErrorMessage>
+      {props.errorMessage && <ErrorMessage>{props.errorMessage}</ErrorMessage>}
     </MyDiv>
   );
 }

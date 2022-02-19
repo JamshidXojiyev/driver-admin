@@ -2,7 +2,8 @@ import styled from "styled-components";
 
 export const RadioStyle = styled.input``;
 export const RadioLabel = styled.label`
-  margin-left: 24px;
+  height: 100%;
+  padding-left: 12px;
   font-family: "Poppins", sans-serif;
   font-style: normal;
   font-weight: 500;
@@ -11,4 +12,5 @@ export const RadioLabel = styled.label`
   display: flex;
   align-items: center;
   color: #192a3e;
+  width: 100%;
 `;

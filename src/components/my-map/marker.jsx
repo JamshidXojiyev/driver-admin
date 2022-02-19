@@ -19,7 +19,6 @@ function LocationMarker(props) {
 }
 
 function MyMarker(props) {
-  console.log(props.marker)
   return (
     <>
       <LocationMarker mark={props?.marker} latlng={(e) => props?.latlng(e)} />;

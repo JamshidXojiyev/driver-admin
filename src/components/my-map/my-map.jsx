@@ -10,7 +10,6 @@ import formatLatitudeLongitude from "./formatLatitudeLongitude";
 
 function MyMap(props) {
   const [pol, setPol] = useState(false);
-  console.log(props.marker)
   return (
     <>
       <MapContainerStyle
@@ -21,6 +20,7 @@ function MyMap(props) {
         zoom={props.zoom ? props.zoom : 6}
         maxZoom="18"
         minZoom="1"
+        scrollWheelZoom={props.scrollWheelZoom}
       >
         <FullscreenControl />
         {props.type === "Point" && (

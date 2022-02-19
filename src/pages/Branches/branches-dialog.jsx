@@ -90,6 +90,7 @@ function BranchesDialog(props) {
       />
       <MyDiv margin="0 0 18px 0" />
       <MyMap
+        scrollWheelZoom={true}
         setPolygon={(e) => {
           formik.setFieldValue("paths", e);
         }}
