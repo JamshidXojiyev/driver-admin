@@ -29,39 +29,39 @@ import ShiftsPays from "../Shift/shifts-pays";
 import Loading from "../../components/loading/loading";
 import client from "../../client";
 import { ReactComponent as ExitIcon } from "../../assats/icons/exit.svg";
+import { useAlert } from "react-alert";
 
 function MainView(props) {
   const location = useLocation();
   const history = useHistory();
-
+  const alert = useAlert();
   const user = localStorage.getItem("token");
   const username = localStorage.getItem("username");
 
   const [menuType, setMenuType] = useState(true);
   const [access_rights, set_access_rights] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [mainPage, setMainPage] = useState("");
 
   useEffect(() => {
-    setLoading(true);
     const token = localStorage.getItem("token");
     client
       .get(`moderator/access-get`)
       .then((res) => {
         set_access_rights(res.data.data.access_rights);
-        setLoading(false);
       })
       .catch((err) => {
-        if (err.response.status === 401) {
+        const error = err.toJSON();
+        if (err.status === 401) {
           localStorage.removeItem("token");
           history.push("/login");
+        } else if (!error.status) {
+          alert.error(error.message, {
+            timeout: 4000,
+          });
         }
-        setLoading(false);
       });
   }, []);
-  if (loading) {
-    return <Loading loading={loading} onWindow />;
-  }
+
   return (
     <>
       <MyDiv height="100%" line padding="20px 16px 20px 8px">

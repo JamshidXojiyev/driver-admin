@@ -6,12 +6,11 @@ import { AlertStyle } from "./global-styles/alert-style.s";
 import { ReactComponent as ErrorAlertIcon } from "./assats/icons/error-alert.svg";
 import { ReactComponent as SuccessAlertIcon } from "./assats/icons/success-alert.svg";
 import { ReactComponent as InfoAlertIcon } from "./assats/icons/info-alert.svg";
-import { useReducer } from "react";
+import { useEffect, useReducer, useState } from "react";
 import LanguageContext, {
   initialState,
   languageReducer,
 } from "./locale/locale";
-import { useState } from "react";
 
 const AlertTemplate = ({ options, message, close }) => (
   <AlertStyle type={options.type} style={{ padding: "12px 16px" }}>
@@ -32,9 +31,10 @@ function App() {
     timeout: 4000,
     offset: "4px",
   };
-  // const [show, setShow] = useState(false);
+
   return (
-    <LanguageContext.Provider value={{ state, dispatch }}>
+    <>
+      <LanguageContext.Provider value={{ state, dispatch }}>
       <AlertProvider template={AlertTemplate} {...options}>
         <Switch>
           <Route exact path="/login" component={LogIn} />
@@ -42,10 +42,7 @@ function App() {
         </Switch>
       </AlertProvider>
     </LanguageContext.Provider>
-    // <div>
-    //   <button onClick={() => setShow(!show)}> Toggle </button>
-    //   {show && <TestComp />}
-    // </div>
+    </>
   );
 }
 

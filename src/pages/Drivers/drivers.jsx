@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { MenuName } from "../../global-styles/body-title";
 import { MyDiv } from "../../global-styles/my-div.s";
 import axios from "axios";
@@ -10,8 +10,9 @@ import { DateStatus } from "./drivers.s";
 import MySelect from "../../components/my-select/my-select";
 import DriverInfo from "./driver-info";
 import MyButton from "../../components/my-button/my-button";
+import { ReactComponent as LiveOnIcon } from "../../assats/icons/on-live.svg";
+import { ReactComponent as LiveOffIcon } from "../../assats/icons/off-live.svg";
 import { useRealtimeData } from "../../useRealTime";
-
 function Drivers(props) {
   const history = useHistory();
   const token = localStorage.getItem("token");
@@ -42,8 +43,17 @@ function Drivers(props) {
   const [search, setSearch] = useState("");
   const [network_status, set_network_status] = useState(null);
   const [driver_id, set_driver_id] = useState();
+  const [liveType, setLiveType] = useState(false);
 
-  const drivers_get = () => {
+  const { data, startLive, stopLive } = useRealtimeData(
+    `${process.env.REACT_APP_BASE_URL}/drivers/get`,
+    5000,
+    pageLimit,
+    page,
+    search,
+    network_status
+  );
+  useEffect(() => {
     axios
       .post(
         `${process.env.REACT_APP_BASE_URL}/drivers/get`,
@@ -69,11 +79,7 @@ function Drivers(props) {
           history.push("/login");
         }
       });
-  };
-  useEffect(() => {
-    drivers_get();
   }, [pageLimit, page, search, network_status]);
-
   useEffect(() => {
     const data = dataBase.map((item) => {
       const testData = {
@@ -93,9 +99,13 @@ function Drivers(props) {
     });
     setNewData({ ...newData, body: data });
   }, [dataBase]);
-  // const data = useRealtimeData("https://jsonplaceholder.typicode.com/users",1000);
-  // console.log(data)
-  const [liveType, setLiveType] = useState(false);
+
+  useEffect(() => {
+    if (data && data.data && data.data.data) {
+      setDataBase(data.data.data.data);
+      setTotal(data.data.data.total);
+    }
+  }, [data]);
 
   if (driver_id !== undefined) {
     return <DriverInfo close={(e) => set_driver_id(e)} driver_id={driver_id} />;
@@ -114,19 +124,20 @@ function Drivers(props) {
           />
         </MyDiv>
         <MyDiv lineRight gap="8px">
+          <MyButton
+            icon
+            text={liveType ? <LiveOffIcon /> : <LiveOnIcon />}
+            onClick={() => {
+              setLiveType(!liveType);
+              liveType ? stopLive() : startLive();
+            }}
+          />
           <MySelect
             recktangleBorder
             width="180px"
             value={network_status}
             options={["all", "online", "offline"]}
             onChange={(e) => set_network_status(e.target.value)}
-          />
-          <MyButton
-            width="160px"
-            // blue={renderType}
-            icon
-            text={"Update Time"}
-            onClick={() => {}}
           />
         </MyDiv>
       </MyDiv>

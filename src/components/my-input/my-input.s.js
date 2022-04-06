@@ -53,8 +53,8 @@ const searchStyle = css`
 `;
 const errorStyle = css`
   border: 1px solid #ff333f;
-  animation: animate 0.7s linear forwards;
   color: #ff333f;
+  animation: animate 0.7s linear forwards;
   @keyframes animate {
     0% {
       transform: translateX(5px);

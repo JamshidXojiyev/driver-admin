@@ -102,12 +102,6 @@ function CarClasses(props) {
   useEffect(() => {
     const data = dataBase.map((item) => {
       const testData = {
-        view: (
-          <MyDiv center>
-            <MyButton icon text={<ViewIcon />} />
-          </MyDiv>
-        ),
-        image: <UserImage src={`http://135.181.101.63:8080${item.image}`} />,
         name: item.name,
         starting_value: item.starting_value,
         free_km: item.free_km,
