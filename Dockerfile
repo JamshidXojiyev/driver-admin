@@ -8,7 +8,7 @@ RUN yarn install --frozen-lockfile
 
 COPY . ./
 
-ENV REACT_APP_BASE_URL=http://135.181.101.63:8080
+ENV REACT_APP_BASE_URL=http://135.181.101.63:8085
 
 RUN yarn build
 

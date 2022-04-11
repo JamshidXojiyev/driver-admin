@@ -43,7 +43,6 @@ function MainView(props) {
   const [mainPage, setMainPage] = useState("");
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
     client
       .get(`moderator/access-get`)
       .then((res) => {

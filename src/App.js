@@ -24,7 +24,7 @@ const AlertTemplate = ({ options, message, close }) => (
 function App() {
   const history = useHistory();
   const [state, dispatch] = useReducer(languageReducer, initialState);
-  !localStorage.getItem("token") ? history.push("/login") : history.push("/");
+  // !localStorage.getItem("token") ? history.push("/login") : history.push("/");
 
   const options = {
     position: positions.BOTTOM_RIGHT,
